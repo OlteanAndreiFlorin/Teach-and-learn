@@ -1,12 +1,42 @@
-<table>
-<tr>
-<td>ID</td>
-<td>LastName</td>
-<td>FirstName</td>
-</tr>
-<tr th:each="student : ${students}">
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+<title>Homepage</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+<link
+	href="http://cdn.jsdelivr.net/webjars/bootstrap/3.3.6/css/bootstrap.min.css"
+	th:href="@{webjars/bootstrap/3.3.6/css/bootstrap.min.class}"
+	rel="stylesheet" media="screen" />
+
+<script src="http://cdn.jsdelivr.net/webjars/jquery/2.2.0/jquery.min.js"
+	th:src="@{webjars/jquery/2.2.0/jquery.min.js}"></script>
+
+</head>
+<body>
+	<div class="container">
+		<a href="/"> <img src="../static/images/logo.png" width="80"
+			th:src="@{images/logo.png}" />
+		</a>
+
+		<ol>
+			<li class="active"><a href="/">Home</a></li>
+			<li><a href="/student">Students</a></li>
+		</ol>
+		<div>
+			<table>
+				<tr>
+					<td>ID</td>
+					<td>LastName</td>
+					<td>FirstName</td>
+				</tr>
+				<tr th:each="student : ${students}">
 					<td th:text="${{student.id}}"></td>
 					<td th:text="${{student.firstName}}"></td>
 					<td th:text="${{student.lastName}}"></td>
-</tr>
-</table>
+				</tr>
+			</table>
+		</div>
+	</div>
+</body>
+</html>
