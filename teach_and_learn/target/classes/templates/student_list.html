@@ -1,0 +1,12 @@
+<table>
+<tr>
+<td>ID</td>
+<td>LastName</td>
+<td>FirstName</td>
+</tr>
+<tr th:each="student : ${students}">
+					<td th:text="${{student.id}}"></td>
+					<td th:text="${{student.firstName}}"></td>
+					<td th:text="${{student.lastName}}"></td>
+</tr>
+</table>
