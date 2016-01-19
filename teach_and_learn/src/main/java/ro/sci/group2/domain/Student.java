@@ -1,6 +1,6 @@
 package ro.sci.group2.domain;
 
-public class Student extends AbstractModel {
+public class Student extends User {
 	private String firstName;
 	private String lastName;
 	private String address;
