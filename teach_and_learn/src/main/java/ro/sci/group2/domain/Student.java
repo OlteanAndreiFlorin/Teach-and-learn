@@ -1,9 +1,13 @@
 package ro.sci.group2.domain;
 
+import java.util.Collection;
+import java.util.HashSet;
+
 public class Student extends User {
 	private String firstName;
 	private String lastName;
 	private String address;
+	private Collection<Subject> desiredSubjects = new HashSet<>(); 
 
 	public String getFirstName() {
 		return firstName;
@@ -31,10 +35,12 @@ public class Student extends User {
 
 	public Student(long id) {
 		setId(id);
+		this.addRole(Role.STUDENT);
 	}
 
 	public Student() {
 		this(0);
+		this.addRole(Role.STUDENT);
 	}
 
 	@Override

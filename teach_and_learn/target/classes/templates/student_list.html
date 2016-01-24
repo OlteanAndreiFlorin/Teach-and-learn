@@ -24,6 +24,7 @@
 			<li><a href="/student">Students</a></li>
 		</ol>
 		<div>
+		<a href="/student/student_edit">Add student</a>
 			<table>
 				<tr>
 					<td>ID</td>
@@ -34,6 +35,10 @@
 					<td th:text="${{student.id}}"></td>
 					<td th:text="${{student.firstName}}"></td>
 					<td th:text="${{student.lastName}}"></td>
+					<td>
+						<a th:href="@{/student/student_edit(id=${student.id})}">Edit student</a>
+						<a th:href="@{/student/student_delete(id=${student.id})}">Delete student</a>
+					</td>
 				</tr>
 			</table>
 		</div>

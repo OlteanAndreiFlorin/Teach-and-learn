@@ -20,5 +20,20 @@ public class StudentService {
 	public Collection<Student> listAll() {
 		return dao.getAll();
 	}
+	
+	public boolean delete(long id){
+		Student student = dao.findById(id);
+		if(student == null) {
+			return false;
+		}
+		else {
+			return dao.delete(student);
+		}
+	}
+	
+	public Student findById(long id){
+		Student student = dao.findById(id);
+		return student;
+	}
 
 }
