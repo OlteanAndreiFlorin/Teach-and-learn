@@ -17,10 +17,6 @@ public class StudentController {
 
 	@RequestMapping("")
 	public ModelAndView list() {
-		/*Student student=new Student();
-		student.setFirstName("Test");
-		student.setLastName("Student");
-		studentService.save(student);*/
 		ModelAndView view = new ModelAndView("student_list");
 		view.addObject("students",studentService.listAll());
 		return view;

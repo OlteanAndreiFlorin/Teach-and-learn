@@ -18,7 +18,6 @@ public class IMStudentDAO extends IMBaseDAO<Student> implements StudentDao {
 		if (StringUtils.isEmpty(query)) {
 			return getAll();
 		}
-		
 		Collection<Student> all = new LinkedList<Student>(getAll());
 		for (Iterator<Student> it = all.iterator(); it.hasNext();) {
 			Student emp = it.next();
@@ -29,7 +28,5 @@ public class IMStudentDAO extends IMBaseDAO<Student> implements StudentDao {
 		}
 		return all;
 	}
-
-	
 
 }

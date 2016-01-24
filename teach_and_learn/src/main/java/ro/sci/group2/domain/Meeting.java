@@ -1,175 +1,116 @@
-/**
- * 
- */
 package ro.sci.group2.domain;
 
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.Collection;
 
-/**
- * @author Razvan Radu
- *
- */
-public class Meeting {
+import org.joda.time.ReadableInterval;
 
-	private HashSet<User> tenants = new HashSet<>();
-	private Calendar setDate;
-	private Calendar recurrency;
-	private Subject meetingSubject;
-	private boolean isActive;
+public class Meeting extends AbstractModel {
+
+	private Teacher teacher;
+	private String city;
+	private String location;
+	private ReadableInterval meetingInterval;
+	private Course course; //or maybe courseId
+	private String observation;
+	private Collection<Student> attendees;
 	
-	
-	public Meeting(Calendar setDate , Calendar recurrency, Subject meetingSubject){
-		this.setDate = setDate;
-		this.recurrency = recurrency;
-		this.meetingSubject = meetingSubject;
-		this.isActive=true;
+	public Meeting(long id){
+		setId(id);
+	}
+	public Meeting(){
+		this(0);
 	}
 
-
-	/**
-	 * @return the tenants
-	 */
-	public Set<? extends User> getListOfTenants() {
-		return tenants;
+	public Teacher getTeacher() {
+		return teacher;
+	}
+	public void setTeacher(Teacher teacher) {
+		this.teacher = teacher;
+	}
+	public String getCity() {
+		return city;
 	}
 
-
-	/**
-	 * @param tenants the tenant to add
-	 */
-	public void addUser(User student) {
-		this.tenants.add(student);
-	}
-	
-	/**
-	 * @param tenants the tenant to be searched for
-	 */
-	public boolean findUser(User user) {
-
-		if (tenants.contains(user)) {
-			return true;
-		}
-		else{
-			return false;
-		}
-	}
-	
-	public boolean removeUser(User user){
-		
-		if (this.findUser(user)) {
-			tenants.remove(user);
-			return true;
-		}
-		else
-		{
-			return false;
-		}
-		
+	public void setCity(String city) {
+		this.city = city;
 	}
 
-	/**
-	 * @return the setDate
-	 */
-	public Calendar getSetDate() {
-		return setDate;
+	public String getLocation() {
+		return location;
 	}
 
-
-	/**
-	 * @param setDate the setDate to set
-	 */
-	public void setSetDate(Calendar setDate) {
-		this.setDate = setDate;
+	public void setLocation(String location) {
+		this.location = location;
 	}
 
-
-	/**
-	 * @return the recurrency
-	 */
-	public Calendar getRecurrency() {
-		return recurrency;
+	public ReadableInterval getMeetingInterval() {
+		return meetingInterval;
 	}
 
-
-	/**
-	 * @param recurrency the recurrency to set
-	 */
-	public void setRecurrency(Calendar recurrency) {
-		this.recurrency = recurrency;
+	public void setMeetingInterval(ReadableInterval meetingInterval) {
+		this.meetingInterval = meetingInterval;
 	}
 
-
-	/**
-	 * @return the isActive
-	 */
-	public boolean isActive() {
-		return isActive;
+	public Course getSubject() {
+		return course;
 	}
 
-
-	/**
-	 * @param isActive the isActive to set
-	 */
-	public void setActive(boolean isActive) {
-		this.isActive = isActive;
+	public void setSubject(Course subject) {
+		this.course = subject;
 	}
 
+	public String getObservation() {
+		return observation;
+	}
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#hashCode()
-	 */
+	public void setObservation(String observation) {
+		this.observation = observation;
+	}
+	public Collection<Student> getAttendees() {
+		return attendees;
+	}
+	public void setAttendees(Collection<Student> attendees) {
+		this.attendees = attendees;
+	}
 	@Override
 	public int hashCode() {
 		final int prime = 31;
-		int result = 1;
-		result = prime * result + (isActive ? 1231 : 1237);
-		result = prime * result + ((meetingSubject == null) ? 0 : meetingSubject.hashCode());
-		result = prime * result + ((recurrency == null) ? 0 : recurrency.hashCode());
-		result = prime * result + ((setDate == null) ? 0 : setDate.hashCode());
-		result = prime * result + ((tenants == null) ? 0 : tenants.hashCode());
+		int result = super.hashCode();
+		result = prime * result + ((city == null) ? 0 : city.hashCode());
+		result = prime * result + ((course == null) ? 0 : course.hashCode());
+		result = prime * result + ((location == null) ? 0 : location.hashCode());
+		result = prime * result + ((meetingInterval == null) ? 0 : meetingInterval.hashCode());
 		return result;
 	}
-
-
-	/* (non-Javadoc)
-	 * @see java.lang.Object#equals(java.lang.Object)
-	 */
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
-		if (obj == null)
+		if (!super.equals(obj))
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
 		Meeting other = (Meeting) obj;
-		if (isActive != other.isActive)
-			return false;
-		if (meetingSubject == null) {
-			if (other.meetingSubject != null)
+		if (city == null) {
+			if (other.city != null)
 				return false;
-		} else if (!meetingSubject.equals(other.meetingSubject))
+		} else if (!city.toLowerCase().equals(other.city.toLowerCase()))
 			return false;
-		if (recurrency == null) {
-			if (other.recurrency != null)
+		if (course == null) {
+			if (other.course != null)
 				return false;
-		} else if (!recurrency.equals(other.recurrency))
+		} else if (!course.equals(other.course))
 			return false;
-		if (setDate == null) {
-			if (other.setDate != null)
+		if (location == null) {
+			if (other.location != null)
 				return false;
-		} else if (!setDate.equals(other.setDate))
+		} else if (!location.toLowerCase().equals(other.location.toLowerCase()))
 			return false;
-		if (tenants == null) {
-			if (other.tenants != null)
+		if (meetingInterval == null) {
+			if (other.meetingInterval != null)
 				return false;
-		} else if (!tenants.equals(other.tenants))
+		} else if (!meetingInterval.equals(other.meetingInterval))
 			return false;
 		return true;
 	}
-	
-	
 }

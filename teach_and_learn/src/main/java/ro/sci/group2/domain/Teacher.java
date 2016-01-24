@@ -16,8 +16,7 @@ public class Teacher extends User {
 	private String firstName;
 	private String lastName;
 	private String address;
-	private Collection<Subject> competencies = new HashSet<>();
-	private List<Meeting> meetings = new ArrayList<>();
+	
 	
 	/**
 	 * @return the firstName
