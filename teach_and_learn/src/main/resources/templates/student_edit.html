@@ -1,12 +1,9 @@
 <html>
 
-<form action="/student" method = "post">
-First Name<input name = "firstName" th:value="${student.firstName}"/><br/>
-Last Name<input name = "lastName" th:value="${student.lastName}"/><br/>
-<input type = "hidden" th:value="${student.id}" name="id"/>
-<input type = "submit" value = "Save"></input>
+<form action="/student" method="post">
+	First Name<input name="firstName" th:value="${student.firstName}" /><br />
+	Last Name<input name="lastName" th:value="${student.lastName}" /><br />
+	<input type="hidden" th:value="${student.id}" name="id" /> <input
+		type="submit" value="Save"></input>
 </form>
-
-
-
 </html>

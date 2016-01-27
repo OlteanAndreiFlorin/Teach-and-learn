@@ -7,6 +7,7 @@ public class Student extends User {
 	private String firstName;
 	private String lastName;
 	private String address;
+	private Collection<Course> desiredSubjects = new HashSet<>(); 
 
 	public String getFirstName() {
 		return firstName;
