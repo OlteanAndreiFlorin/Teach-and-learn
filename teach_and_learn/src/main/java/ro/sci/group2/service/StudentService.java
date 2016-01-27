@@ -21,6 +21,32 @@ public class StudentService {
 		return dao.getAll();
 	}
 
+	/**
+	 * 
+	 * @param order
+	 *            the order in which to sort the list (must be "firstascend",
+	 *            "firstdescend","lastascend"or"lastdescend")
+	 * @return a sorted collection of students
+	 * @throws IllegalArgumentException
+	 *             if the order that has been passed is invalid
+	 */
+	public Collection<Student> listAll(String order) throws IllegalArgumentException {
+		StudentSorter sorter = new StudentSorter();
+		switch (order.toLowerCase()) {
+		case "firstascend":
+			return sorter.sortByFirstNameAscending(dao.getAll());
+		case "firstdescend":
+			return sorter.sortByFirstNameDescending(dao.getAll());
+		case "lastascend":
+			return sorter.sortByLastNameAscending(dao.getAll());
+		case "lastdescend":
+			return sorter.sortByLastNameDescending(dao.getAll());
+		default:
+			throw new IllegalArgumentException("Order not valid ");
+		}
+
+	}
+
 	public boolean delete(long id) {
 		Student student = dao.findById(id);
 		if (student == null) {

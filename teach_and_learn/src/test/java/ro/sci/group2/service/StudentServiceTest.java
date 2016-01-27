@@ -1,5 +1,6 @@
 package ro.sci.group2.service;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -17,27 +18,59 @@ public class StudentServiceTest {
 	@Autowired
 	private StudentService service;
 
+	@After
+	public void tearDown() {
+		for (Student student : service.listAll()) {
+			service.delete(student.getId());
+		}
+	}
+
 	@Test
 	public void testSaveNewStudent() {
 		Student student = new Student();
 		student.setFirstName("Gigi");
-		student.setLastName("Beeeeecali");
+		student.setLastName("Becali");
 		Student savedStudent = service.save(student);
 		Assert.assertTrue(savedStudent.getId() > 0);
 		Assert.assertEquals("Gigi", savedStudent.getFirstName());
-		Assert.assertEquals("Beeeeecali", savedStudent.getLastName());
+		Assert.assertEquals("Becali", savedStudent.getLastName());
 	}
 
 	@Test
 	public void testSaveExistingStudent() {
 		Student student = new Student();
 		student.setFirstName("Gigi");
-		student.setLastName("Beeeeecali");
+		student.setLastName("Becali");
 		Student savedStudent = service.save(student);
 		Assert.assertTrue(savedStudent.getId() > 0);
 		Student savedStudent2 = service.save(student);
 		Assert.assertEquals(savedStudent, savedStudent2);
 	}
 
+	@Test
+	public void testDeleteStudent() {
+		Student student = new Student();
+		student.setFirstName("Gigi");
+		student.setLastName("Becali");
+		Student savedStudent = service.save(student);
+		Assert.assertTrue(service.delete(savedStudent.getId()));
+		Assert.assertNull(service.findById(savedStudent.getId()));
+	}
+
+	@Test
+	public void testDoubleDeletionStudent() {
+		Student student = new Student();
+		student.setFirstName("Gigi");
+		student.setLastName("Becali");
+		Student savedStudent = service.save(student);
+		Assert.assertTrue(service.delete(savedStudent.getId()));
+		Assert.assertFalse(service.delete(savedStudent.getId()));
+		Assert.assertNull(service.findById(savedStudent.getId()));
+	}
+
+	@Test
+	public void testDeleteInexistingStudent() {
+		Assert.assertFalse(service.delete(-1));
+	}
+
 }
- 

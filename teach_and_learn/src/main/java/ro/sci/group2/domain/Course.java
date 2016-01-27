@@ -1,16 +1,12 @@
 package ro.sci.group2.domain;
 
-public class Course extends AbstractModel {
+public class Course {
 
 	private String name;
 	private int level;
 
-	public Course(long id) {
-		setId(id);
-	}
-
 	public Course() {
-		this(0);
+		
 	}
 
 	public String getName() {

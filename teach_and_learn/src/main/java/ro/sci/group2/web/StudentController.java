@@ -21,7 +21,12 @@ public class StudentController {
 		view.addObject("students",studentService.listAll());
 		return view;
 	}
-	
+	@RequestMapping(value="/sorted" , method= RequestMethod.POST)
+	public ModelAndView list(String order){
+		ModelAndView view = list();
+		view.addObject("students",studentService.listAll(order));
+		return view;
+	}
 	@RequestMapping(method = RequestMethod.POST)
 	public ModelAndView saveStudent(Student student){
 		studentService.save(student);

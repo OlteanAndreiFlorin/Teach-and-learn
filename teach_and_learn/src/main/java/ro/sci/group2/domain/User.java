@@ -3,6 +3,7 @@
  */
 package ro.sci.group2.domain;
 
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -12,7 +13,7 @@ import java.util.Set;
 public class User extends AbstractModel {
 	private String userName;
 	private int userPassCode;
-	private Set<Role> roles;
+	private Set<Role> roles=new HashSet<>();
 	private boolean isLogged;
 	
 	public User(long id) {
