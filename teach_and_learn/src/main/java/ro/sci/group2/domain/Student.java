@@ -1,9 +1,13 @@
 package ro.sci.group2.domain;
 
-public class Student extends AbstractModel {
+import java.util.Collection;
+import java.util.LinkedList;
+
+public class Student extends User {
 	private String firstName;
 	private String lastName;
 	private String address;
+	private Collection<Course> desiredCourses=new LinkedList<>();
 
 	public String getFirstName() {
 		return firstName;
@@ -29,12 +33,33 @@ public class Student extends AbstractModel {
 		this.address = address;
 	}
 
+	public Collection<Course> getDesiredCourses() {
+		return desiredCourses;
+	}
+
+	/*
+	 * 
+	 * @param course
+	 * @throws NullPointerException if the course passed is null
+	 
+	public void addDesiredCourse(Course course)throws NullPointerException {
+		if(!this.desiredCourses.contains(course)){
+			this.desiredCourses.add(course);
+		}
+	}*/
+
+	public void setDesiredCourses(Collection<Course> desiredCourses) {
+		this.desiredCourses = desiredCourses;
+	}
+
 	public Student(long id) {
 		setId(id);
+		this.addRole(Role.STUDENT);
 	}
 
 	public Student() {
 		this(0);
+		this.addRole(Role.STUDENT);
 	}
 
 	@Override
