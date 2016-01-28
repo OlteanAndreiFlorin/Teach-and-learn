@@ -1,13 +1,13 @@
 package ro.sci.group2.domain;
 
 import java.util.Collection;
-import java.util.HashSet;
+import java.util.LinkedList;
 
 public class Student extends User {
 	private String firstName;
 	private String lastName;
 	private String address;
-	private Collection<Course> desiredSubjects = new HashSet<>(); 
+	private Collection<Course> desiredCourses=new LinkedList<>();
 
 	public String getFirstName() {
 		return firstName;
@@ -31,6 +31,25 @@ public class Student extends User {
 
 	public void setAddress(String address) {
 		this.address = address;
+	}
+
+	public Collection<Course> getDesiredCourses() {
+		return desiredCourses;
+	}
+
+	/*
+	 * 
+	 * @param course
+	 * @throws NullPointerException if the course passed is null
+	 
+	public void addDesiredCourse(Course course)throws NullPointerException {
+		if(!this.desiredCourses.contains(course)){
+			this.desiredCourses.add(course);
+		}
+	}*/
+
+	public void setDesiredCourses(Collection<Course> desiredCourses) {
+		this.desiredCourses = desiredCourses;
 	}
 
 	public Student(long id) {

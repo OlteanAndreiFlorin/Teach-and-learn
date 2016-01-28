@@ -3,10 +3,7 @@
  */
 package ro.sci.group2.domain;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
 
 /**
  * @author Razvan Radu
@@ -16,6 +13,7 @@ public class Teacher extends User {
 	private String firstName;
 	private String lastName;
 	private String address;
+	private Collection<Course> myCompetences;
 	
 	
 	/**
@@ -53,6 +51,12 @@ public class Teacher extends User {
 	 */
 	public void setAddress(String address) {
 		this.address = address;
+	}
+	public Collection<Course> getMyCompetences() {
+		return myCompetences;
+	}
+	public void setMyCompetences(Collection<Course> myCompetences) {
+		this.myCompetences = myCompetences;
 	}
 	
 	

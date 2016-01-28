@@ -17,7 +17,7 @@ public class Course {
 	 * 
 	 * @param name
 	 * @throws IllegalArgumentException
-	 *             if the name contains digits
+	 *             if the name is not valid
 	 */
 	public void setName(String name) throws IllegalArgumentException {
 		if (!validateName(name)) {
@@ -31,8 +31,11 @@ public class Course {
 		if (name.isEmpty()) {
 			return false;
 		}
+		if(name.length()>20){
+			return false;
+		}
 		for (char c : name.toCharArray()) {
-			if (Character.isDigit(c)) {
+			if (!Character.isLetter(c)) {
 				return false;
 			}
 		}
@@ -48,7 +51,7 @@ public class Course {
 	 * 
 	 * @param level
 	 * @throws IllegalArgumentException
-	 *             if the subject lvl is not valid (must be integer number
+	 *             if the subject level is not valid (must be integer number
 	 *             between 0 and 12)
 	 */
 	public void setLevel(int level) throws IllegalArgumentException {
@@ -89,7 +92,7 @@ public class Course {
 		if (name == null) {
 			if (other.name != null)
 				return false;
-		} else if (!name.equals(other.name))
+		} else if (!name.toLowerCase().equals(other.name.toLowerCase()))
 			return false;
 		return true;
 	}

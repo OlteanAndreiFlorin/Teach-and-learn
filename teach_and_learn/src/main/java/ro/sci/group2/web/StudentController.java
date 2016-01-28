@@ -27,6 +27,12 @@ public class StudentController {
 		view.addObject("students",studentService.listAll(order));
 		return view;
 	}
+	@RequestMapping(value="/search",method= RequestMethod.POST)
+	public ModelAndView listByName(String query){
+		ModelAndView view= list();
+		view.addObject("students",studentService.findByName(query));
+		return view;
+	}
 	@RequestMapping(method = RequestMethod.POST)
 	public ModelAndView saveStudent(Student student){
 		studentService.save(student);

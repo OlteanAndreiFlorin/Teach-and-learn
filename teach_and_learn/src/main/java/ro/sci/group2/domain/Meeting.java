@@ -9,9 +9,9 @@ import org.joda.time.ReadableInterval;
  * meeting the following information are saved: The teacher who initiated the
  * meeting, the city and location where it takes place,the time interval of the
  * meeting,observations that the teacher might add for the meeting the course
- * that will be taught and a list with the attendees
+ * that will be taught and a list with the attendees;
  * 
- * @author oltea
+ * @author Andrei
  *
  */
 public class Meeting extends AbstractModel {
