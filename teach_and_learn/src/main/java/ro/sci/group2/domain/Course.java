@@ -1,12 +1,15 @@
 package ro.sci.group2.domain;
 
-public class Course {
+public class Course extends AbstractModel {
 
 	private String name;
 	private int level;
 
-	public Course() {
-		
+	public Course(long id) {
+		setId(id);
+	}
+	public Course(){
+		this(0);
 	}
 
 	public String getName() {
@@ -31,7 +34,7 @@ public class Course {
 		if (name.isEmpty()) {
 			return false;
 		}
-		if(name.length()>20){
+		if(name.length()<2||name.length()>20){
 			return false;
 		}
 		for (char c : name.toCharArray()) {
