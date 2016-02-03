@@ -20,8 +20,17 @@
 </head>
 <body>
 	<div class="container">
-		<img src="./static/images/logo.png}" width="80"/>
+		<img src="./static/images/logo.png}" width="80" />
 		
+		<div style='float: right;'
+			th:with="currentUser=${#httpServletRequest.userPrincipal?.name}">
+			<div th:if="${currentUser != null}">
+				<form th:action="@{/logout}" method="post">
+					<input type="submit" value="Log out" />
+				</form>
+				<p th:text="${currentUser}">sample_user</p>
+			</div>
+		</div>
 
 		<div>
 			<nav class="navbar navbar-default">
@@ -42,7 +51,8 @@
 			<nav class="navbar navbar-default">
 				<div class="container-fluid">
 					<div class="collapse navbar-collapse">
-						<form action="/user/search" method="post" class="navbar-form navbar-right" role="add">
+						<form action="/user/search" method="post"
+							class="navbar-form navbar-right" role="add">
 							<div class="form-group">
 								<input type="text" class="form-control" name="query" id="query"
 									placeholder="Search for ..." />
@@ -65,27 +75,34 @@
 			<table class="table">
 				<tr>
 					<th>ID</th>
+					<th>Username</th>
+					<th>Password</th>
+
 					<th>FirstName
 						<form action="/user/sorted" method="post">
-							<button class="glyphicon glyphicon-chevron-up" type="submit" name="order" value="firstAscend"></button>
-							<button class="glyphicon glyphicon-chevron-down" type="submit" name="order" value="firstDescend"></button>
+							<button class="glyphicon glyphicon-chevron-up" type="submit"
+								name="order" value="firstAscend"></button>
+							<button class="glyphicon glyphicon-chevron-down" type="submit"
+								name="order" value="firstDescend"></button>
 						</form>
 					</th>
 					<th>LastName
 						<form action="/user/sorted" method="post">
-							<button class="glyphicon glyphicon-chevron-up" type="submit" name="order" value="lastAscend"></button>
-							<button class="glyphicon glyphicon-chevron-down" type="submit" name="order" value="lastDescend"></button>
+							<button class="glyphicon glyphicon-chevron-up" type="submit"
+								name="order" value="lastAscend"></button>
+							<button class="glyphicon glyphicon-chevron-down" type="submit"
+								name="order" value="lastDescend"></button>
 						</form>
 					</th>
 					<th>&nbsp;</th>
 				</tr>
 				<tr th:each="user : ${users}">
 					<td th:text="${{user.roles}}"></td>
+					<td th:text="${{user.username}}"></td>
+					<td th:text="${{user.password}}"></td>
 					<td th:text="${{user.firstName}}"></td>
 					<td th:text="${{user.lastName}}"></td>
-					<td>
-					
-					<a th:href="@{/user/user_edit(id=${user.id})}"
+					<td><a th:href="@{/user/user_edit(id=${user.id})}"
 						class="glyphicon glyphicon-pencil" aria-hidden="true"> </a> <a
 						th:href="@{/user/user_delete(id=${user.id})}"
 						class="glyphicon glyphicon-remove" aria-hidden="true"> </a></td>

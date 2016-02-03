@@ -7,4 +7,6 @@ import ro.sci.group2.domain.User;
 public interface UserDAO extends BaseDAO<User> {
 
 	Collection<User> searchByName(String query);
+
+	User findByUsername(String username);
 }

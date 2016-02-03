@@ -18,6 +18,16 @@
 		<img src="../static/images/logo.jpg" width="80"
 			th:src="@{images/logo.jpg}" />
 
+		<div style='float: right;'
+			th:with="currentUser=${#httpServletRequest.userPrincipal?.name}">
+			<div th:if="${currentUser != null}">
+				<form th:action="@{/logout}" method="post">
+					<input type="submit" value="Log out" />
+				</form>
+				<p th:text="${currentUser}">sample_user</p>
+			</div>
+		</div>
+
 
 		<div>
 			<nav class="navbar navbar-default">

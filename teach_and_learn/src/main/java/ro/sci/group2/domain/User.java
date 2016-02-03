@@ -6,7 +6,7 @@ import java.util.LinkedList;
 public class User extends AbstractModel {
 
 	private String password;
-	private final String username;
+	private String username;
 	private String firstName;
 	private String lastName;
 	private String address;
@@ -16,17 +16,21 @@ public class User extends AbstractModel {
 	private Collection<Role> roles = new LinkedList<>();
 	private Collection<Course> courses = new LinkedList<>();
 
-	public User(long id, String username) {
+	public User(long id) {
 		setId(id);
-		this.username = username;
+
 	}
 
 	public User() {
-		this(0, "mock");
+		this(0);
 	}
 
 	public String getUsername() {
 		return username;
+	}
+	
+	public void setUsername(String username){
+		this.username=username;
 	}
 
 	public String getPassword() {
