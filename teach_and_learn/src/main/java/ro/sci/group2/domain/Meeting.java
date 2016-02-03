@@ -16,12 +16,12 @@ import org.joda.time.ReadableInterval;
  */
 public class Meeting extends AbstractModel {
 
-	private Teacher teacher;
+	private User teacher;
 	private String city;
 	private String location;
 	private ReadableInterval meetingInterval;
 	private String observation;
-	private Collection<Student> attendees;
+	private Collection<User> attendees;
 	private Course course;
 
 	public Meeting(long id) {
@@ -32,11 +32,11 @@ public class Meeting extends AbstractModel {
 		this(0);
 	}
 
-	public Teacher getTeacher() {
+	public User getTeacher() {
 		return teacher;
 	}
 
-	public void setTeacher(Teacher teacher) {
+	public void setTeacher(User teacher) {
 		this.teacher = teacher;
 	}
 
@@ -72,11 +72,11 @@ public class Meeting extends AbstractModel {
 		this.observation = observation;
 	}
 
-	public Collection<Student> getAttendees() {
+	public Collection<User> getAttendees() {
 		return attendees;
 	}
 
-	public void setAttendees(Collection<Student> attendees) {
+	public void setAttendees(Collection<User> attendees) {
 		this.attendees = attendees;
 	}
 

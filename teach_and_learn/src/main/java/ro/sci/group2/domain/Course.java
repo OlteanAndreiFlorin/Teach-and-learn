@@ -99,4 +99,8 @@ public class Course extends AbstractModel {
 			return false;
 		return true;
 	}
+	@Override
+	public String toString() {
+		return "Course [name=" + name + ", level=" + level + "]";
+	}
 }

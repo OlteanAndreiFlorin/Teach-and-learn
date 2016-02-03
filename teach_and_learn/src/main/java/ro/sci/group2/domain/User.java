@@ -1,87 +1,116 @@
-/**
- * 
- */
 package ro.sci.group2.domain;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.Collection;
+import java.util.LinkedList;
 
-/**
- * @author Razvan Radu
- *
- */
 public class User extends AbstractModel {
-	private String userName;
-	private int userPassCode;
-	private Set<Role> roles=new HashSet<>();
-	private boolean isLogged;
-	
-	public User(long id) {
+
+	private String password;
+	private final String username;
+	private String firstName;
+	private String lastName;
+	private String address;
+	private String email;
+	private String phone;
+	private Gender gender;
+	private Collection<Role> roles = new LinkedList<>();
+	private Collection<Course> courses = new LinkedList<>();
+
+	public User(long id, String username) {
 		setId(id);
+		this.username = username;
 	}
 
 	public User() {
-		this(0);
-	}
-	
-	/**
-	 * @return the userName
-	 */
-	public String getUserName() {
-		return userName;
+		this(0, "mock");
 	}
 
-	/**
-	 * @param userName the userName to set
-	 */
-	public void setUserName(String userName) {
-		this.userName = userName;
-	}
-	
-	public void setLogged(boolean logged){
-		this.isLogged = logged;
+	public String getUsername() {
+		return username;
 	}
 
-	/**
-	 * @return true if the password matches the one in the system and false if not
-	 */
-	protected boolean checkUserPass(UserPassword pass) {
-		if (this.userPassCode == pass.hashCode()) {
-			this.setLogged(true);
-			return true;
-		}
-		else {
-			this.setLogged(false);
-			return false;
-		}
-			
+	public String getPassword() {
+		return password;
 	}
 
-	/**
-	 * @param userPass the {@link UserPassword User password} to set
-	 */
-	protected void setUserPass(UserPassword pass) {
-		if (this.isLogged) {
-			this.userPassCode = pass.hashCode();
-		}
-		else {
-			throw new IllegalArgumentException("Not logged in, cannot change existing password");
-		}
-		
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
-	public void addRole(Role role){
-		this.roles.add(role);
+	public String getFirstName() {
+		return firstName;
 	}
-	
-	public void removeRole(Role role){
-		if (this.roles.contains(role)) {
-			this.roles.remove(role);
-		}
-		else {
-			throw new IllegalArgumentException("Cannot remove non-existing role");
-		}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
 	}
-	
-	
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
+	public Collection<Role> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(Collection<Role> roles) {
+		this.roles = roles;
+	}
+
+	public Collection<Course> getCourses() {
+		return this.courses;
+	}
+
+	public void setCourses(Collection<Course> courses) {
+		this.courses = courses;
+	}
+
+	public Gender getGender() {
+		return gender;
+	}
+
+	public void setGender(Gender gender) {
+		this.gender = gender;
+	}
+
+	@Override
+	public int hashCode() {
+		return username.hashCode();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof User) {
+			return username.equals(((User) obj).username);
+		}
+		return false;
+	}
 }

@@ -6,54 +6,55 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import ro.sci.group2.domain.Student;
-import ro.sci.group2.service.StudentService;
+import ro.sci.group2.domain.User;
+import ro.sci.group2.service.UserService;
+
 
 @Controller
-@RequestMapping("/student")
-public class StudentController {
+@RequestMapping("/user")
+public class UserController {
 	@Autowired
-	StudentService studentService;
+	UserService userService;
 
 	@RequestMapping("")
 	public ModelAndView list() {
-		ModelAndView view = new ModelAndView("student_list");
-		view.addObject("students",studentService.listAll());
+		ModelAndView view = new ModelAndView("user_list");
+		view.addObject("users",userService.listAll());
 		return view;
 	}
 	@RequestMapping(value="/sorted" , method= RequestMethod.POST)
 	public ModelAndView list(String order){
 		ModelAndView view = list();
-		view.addObject("students",studentService.listAll(order));
+		view.addObject("users",userService.listAll(order));
 		return view;
 	}
 	@RequestMapping(value="/search",method= RequestMethod.POST)
 	public ModelAndView listByName(String query){
 		ModelAndView view= list();
-		view.addObject("students",studentService.findByName(query));
+		view.addObject("users",userService.findByName(query));
 		return view;
 	}
 	@RequestMapping(method = RequestMethod.POST)
-	public ModelAndView saveStudent(Student student){
-		studentService.save(student);
+	public ModelAndView saveuser(User user){
+		userService.save(user);
 		return list();
 	}
 	
-	@RequestMapping("/student_edit")
+	@RequestMapping("/user_edit")
 	public ModelAndView onEdit(Long id){
-		ModelAndView result = new ModelAndView("student_edit");
-		Student student = new Student();
+		ModelAndView result = new ModelAndView("user_edit");
+		User user=new User();
 		if(id != null){
-			student = studentService.findById(id);
+			user = userService.findById(id);
 		}
-		result.addObject("student" , student);
+		result.addObject("user" , user);
 		return result;
 	}
 	
-	@RequestMapping("/student_delete")
+	@RequestMapping("/user_delete")
 	public ModelAndView onDelete(long id){
-		if(!studentService.delete(id)){
-			throw new IllegalStateException("Non existing student");
+		if(!userService.delete(id)){
+			throw new IllegalStateException("Non existing user");
 		}
 		else
 		{

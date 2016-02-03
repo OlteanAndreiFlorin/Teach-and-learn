@@ -8,5 +8,6 @@ package ro.sci.group2.domain;
  *
  */
 public enum Role {
-	TEACHER, STUDENT, ADMIN
+	ADMIN, TEACHER, STUDENT ;
+
 }

@@ -20,23 +20,32 @@
 </head>
 <body>
 	<div class="container">
-		<a href="/"> <img src="../static/images/logo.png" width="80"
-			th:src="@{images/logo.png}" />
-		</a>
+		<img src="./static/images/logo.jpg}" width="80"/>
+		
 
-		<ol class="breadcrumb">
-			<li class="active"><a href="/">Home</a></li>
-			<li><a href="/student">Students</a></li>
-		</ol>
 		<div>
+			<nav class="navbar navbar-default">
+				<div class="container-fluid">
+					<div class="navbar-header">
+						<a class="navbar-brand">Teach and Learn</a>
+					</div>
+					<ul class="nav navbar-nav">
+						<li><a href="/">Home</a></li>
+						<li><a href="#">Teacher</a></li>
+						<li class="active"><a href="/student">Student</a></li>
+						<li><a href="#">Contact</a></li>
+						<li><a href="/admin">Admin</a></li>
+					</ul>
+				</div>
+			</nav>
 
 			<nav class="navbar navbar-default">
 				<div class="container-fluid">
 					<div class="collapse navbar-collapse">
-						<form action="/student/search" method="post" class="navbar-form navbar-right" role="add">
+						<form action="/user/search" method="post" class="navbar-form navbar-right" role="add">
 							<div class="form-group">
 								<input type="text" class="form-control" name="query" id="query"
-									placeholder="Search by name" />
+									placeholder="Search for ..." />
 							</div>
 							<button type="submit" class="btn btn-default" onclick="">Search</button>
 
@@ -58,23 +67,25 @@
 					<th>ID</th>
 					<th>FirstName
 						<form action="/student/sorted" method="post">
-							<button type="submit" name="order" value="firstAscend">&#x25B2;</button>
-							<button type="submit" name="order" value="firstDescend">&#x25BC;</button>
+							<button class="glyphicon glyphicon-chevron-up" type="submit" name="order" value="firstAscend"></button>
+							<button class="glyphicon glyphicon-chevron-down" type="submit" name="order" value="firstDescend"></button>
 						</form>
 					</th>
 					<th>LastName
 						<form action="/student/sorted" method="post">
-							<button type="submit" name="order" value="lastAscend">&#x25B2;</button>
-							<button type="submit" name="order" value="lastDescend">&#x25BC;</button>
+							<button class="glyphicon glyphicon-chevron-up" type="submit" name="order" value="lastAscend"></button>
+							<button class="glyphicon glyphicon-chevron-down" type="submit" name="order" value="lastDescend"></button>
 						</form>
 					</th>
 					<th>&nbsp;</th>
 				</tr>
 				<tr th:each="student : ${students}">
-					<td th:text="${{student.id}}"></td>
+					<td th:text="${{student.roles}}"></td>
 					<td th:text="${{student.firstName}}"></td>
 					<td th:text="${{student.lastName}}"></td>
-					<td><a th:href="@{/student/student_edit(id=${student.id})}"
+					<td>
+					
+					<a th:href="@{/student/student_edit(id=${student.id})}"
 						class="glyphicon glyphicon-pencil" aria-hidden="true"> </a> <a
 						th:href="@{/student/student_delete(id=${student.id})}"
 						class="glyphicon glyphicon-remove" aria-hidden="true"> </a></td>

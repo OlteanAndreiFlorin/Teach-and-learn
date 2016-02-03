@@ -6,20 +6,20 @@ import java.util.LinkedList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import ro.sci.group2.dao.StudentDao;
+import ro.sci.group2.dao.UserDAO;
 import ro.sci.group2.domain.Course;
-import ro.sci.group2.domain.Student;
+import ro.sci.group2.domain.User;
 
 @Service
-public class StudentService {
+public class UserService {
 	@Autowired
-	private StudentDao dao;
+	private UserDAO dao;
 
-	public Student save(Student student) {
-		return dao.update(student);
+	public User save(User user) {
+		return dao.update(user);
 	}
 
-	public Collection<Student> listAll() {
+	public Collection<User> listAll() {
 		return dao.getAll();
 	}
 
@@ -28,12 +28,12 @@ public class StudentService {
 	 * @param order
 	 *            the order in which to sort the list (must be "firstascend",
 	 *            "firstdescend","lastascend"or"lastdescend")
-	 * @return a sorted collection of students
+	 * @return a sorted collection of users
 	 * @throws IllegalArgumentException
 	 *             if the order that has been passed is invalid
 	 */
-	public Collection<Student> listAll(String order) throws IllegalArgumentException {
-		StudentSorter sorter = new StudentSorter();
+	public Collection<User> listAll(String order) throws IllegalArgumentException {
+		UserSorter sorter = new UserSorter();
 		switch (order.toLowerCase()) {
 		case "firstascend":
 			return sorter.sortByFirstNameAscending(dao.getAll());
@@ -50,36 +50,36 @@ public class StudentService {
 	}
 
 	public boolean delete(long id) {
-		Student student = dao.findById(id);
-		if (student == null) {
+		User user = dao.findById(id);
+		if (user == null) {
 			return false;
 		} else {
-			return dao.delete(student);
+			return dao.delete(user);
 		}
 	}
 
-	public Student findById(long id) {
-		Student student = dao.findById(id);
-		return student;
+	public User findById(long id) {
+		User user = dao.findById(id);
+		return user;
 	}
-	public Collection<Student> findByName(String query){
+	public Collection<User> findByName(String query){
 		return dao.searchByName(query);
 	}
 
 	public void addCourse(long id, Course course) {
-		Student student = dao.findById(id);
-		Collection<Course> courses = new LinkedList<>(student.getDesiredCourses());
+		User user = dao.findById(id);
+		Collection<Course> courses = new LinkedList<>(user.getCourses());
 		if (!courses.contains(course)) {
 			courses.add(course);
-			student.setDesiredCourses(courses);
+			user.setCourses(courses);
 		}
 	}
 
 	public boolean removeCourse(long id, Course course) {
-		Student student = dao.findById(id);
-		Collection<Course> courses = new LinkedList<>(student.getDesiredCourses());
+		User user = dao.findById(id);
+		Collection<Course> courses = new LinkedList<>(user.getCourses());
 		if (courses.remove(course)) {
-			student.setDesiredCourses(courses);
+			user.setCourses(courses);
 			return true;
 		} else {
 			return false;

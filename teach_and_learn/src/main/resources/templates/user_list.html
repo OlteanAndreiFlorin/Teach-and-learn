@@ -20,7 +20,7 @@
 </head>
 <body>
 	<div class="container">
-		<img src="./static/images/logo.jpg}" width="80"/>
+		<img src="./static/images/logo.png}" width="80"/>
 		
 
 		<div>
@@ -32,7 +32,7 @@
 					<ul class="nav navbar-nav">
 						<li><a href="/">Home</a></li>
 						<li><a href="#">Teacher</a></li>
-						<li class="active"><a href="/student">Student</a></li>
+						<li class="active"><a href="/user">Student</a></li>
 						<li><a href="#">Contact</a></li>
 						<li><a href="/admin">Admin</a></li>
 					</ul>
@@ -52,9 +52,9 @@
 						</form>
 
 						<ul class="nav navbar-nav navbar-left">
-							<li><a href="/student/student_edit"><span
+							<li><a href="/user/user_edit"><span
 									class="glyphicon glyphicon-plus" aria-hidden="true">Add
-										student</span></a></li>
+										user</span></a></li>
 
 						</ul>
 					</div>
@@ -66,28 +66,28 @@
 				<tr>
 					<th>ID</th>
 					<th>FirstName
-						<form action="/student/sorted" method="post">
+						<form action="/user/sorted" method="post">
 							<button class="glyphicon glyphicon-chevron-up" type="submit" name="order" value="firstAscend"></button>
 							<button class="glyphicon glyphicon-chevron-down" type="submit" name="order" value="firstDescend"></button>
 						</form>
 					</th>
 					<th>LastName
-						<form action="/student/sorted" method="post">
+						<form action="/user/sorted" method="post">
 							<button class="glyphicon glyphicon-chevron-up" type="submit" name="order" value="lastAscend"></button>
 							<button class="glyphicon glyphicon-chevron-down" type="submit" name="order" value="lastDescend"></button>
 						</form>
 					</th>
 					<th>&nbsp;</th>
 				</tr>
-				<tr th:each="student : ${students}">
-					<td th:text="${{student.roles}}"></td>
-					<td th:text="${{student.firstName}}"></td>
-					<td th:text="${{student.lastName}}"></td>
+				<tr th:each="user : ${users}">
+					<td th:text="${{user.roles}}"></td>
+					<td th:text="${{user.firstName}}"></td>
+					<td th:text="${{user.lastName}}"></td>
 					<td>
 					
-					<a th:href="@{/student/student_edit(id=${student.id})}"
+					<a th:href="@{/user/user_edit(id=${user.id})}"
 						class="glyphicon glyphicon-pencil" aria-hidden="true"> </a> <a
-						th:href="@{/student/student_delete(id=${student.id})}"
+						th:href="@{/user/user_delete(id=${user.id})}"
 						class="glyphicon glyphicon-remove" aria-hidden="true"> </a></td>
 				</tr>
 			</table>

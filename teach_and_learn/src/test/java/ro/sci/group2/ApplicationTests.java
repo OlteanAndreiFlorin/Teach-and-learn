@@ -2,29 +2,27 @@ package ro.sci.group2;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
 import ro.sci.group2.dao.UserDAO;
+//import ro.sci.group2.dao.db.JDBCUserDAO;
 import ro.sci.group2.dao.inmemory.IMUserDAO;
 
-@SpringBootApplication
 @Configuration
 @EnableAutoConfiguration
 @ComponentScan
-public class TeachAndLearnApplication {
+public class ApplicationTests {
+ public static void main(String[] args) {
+  SpringApplication.run(ApplicationTests.class, args);
+  
+ }
+ 
+ @Bean
+ public UserDAO employeeDao() {
+  return  new IMUserDAO();
+    //new JDBCUserDAO("localhost", "5432", "test", "test", "test");
+ }
 
-	public static void main(String[] args) {
-		SpringApplication.run(TeachAndLearnApplication.class, args);
-	}
-
-	@Bean
-	public UserDAO employeeDao() {
-		return // new JDBCUserDao("", "", "", "", "");
-
-		new IMUserDAO();
-
-	}
 }
