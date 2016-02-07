@@ -6,7 +6,7 @@
     <property name="java.vm.version" value="24.80-b11"/>
     <property name="user.country.format" value="RO"/>
     <property name="java.vm.vendor" value="Oracle Corporation"/>
-    <property name="maven.multiModuleProjectDirectory" value="c:\Documents and Settings\rlu\git\Teach-and-learn\teach_and_learn"/>
+    <property name="maven.multiModuleProjectDirectory" value="c:\Documents and Settings\rlu\git\Teach-and-learn\teach\teach_and_learn"/>
     <property name="java.vendor.url" value="http://java.oracle.com/"/>
     <property name="path.separator" value=";"/>
     <property name="guice.disable.misplaced.annotation.check" value="true"/>
@@ -17,7 +17,7 @@
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="sun.os.patch.level" value="Service Pack 3"/>
     <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
-    <property name="user.dir" value="c:\Documents and Settings\rlu\git\Teach-and-learn\teach_and_learn"/>
+    <property name="user.dir" value="c:\Documents and Settings\rlu\git\Teach-and-learn\teach\teach_and_learn"/>
     <property name="java.runtime.version" value="1.7.0_80-b15"/>
     <property name="java.awt.graphicsenv" value="sun.awt.Win32GraphicsEnvironment"/>
     <property name="java.endorsed.dirs" value="C:\jdk\jre\lib\endorsed"/>
@@ -29,7 +29,7 @@
     <property name="os.name" value="Windows XP"/>
     <property name="classworlds.conf" value="C:\Program Files\apache-maven-3.3.9\bin\..\bin\m2.conf"/>
     <property name="sun.jnu.encoding" value="Cp1252"/>
-    <property name="java.library.path" value="C:\jdk\bin;C:\WINDOWS\Sun\Java\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\Documents and Settings\All Users\Application Data\Oracle\Java\javapath;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\Program Files\ATI Technologies\ATI.ACE\;C:\Program Files\Skype\Phone\;C:\WINDOWS\system32\WindowsPowerShell\v1.0;C:\jdk\bin;C:\Program Files\TortoiseGit\bin;C:\Program Files\apache-maven-3.3.9\bin;C:\Program Files\apache-ant-1.9.6\bin;C:\Program Files\apache-tomcat-9.0.0.M1\bin;."/>
+    <property name="java.library.path" value="C:\jdk\bin;C:\WINDOWS\Sun\Java\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\Documents and Settings\All Users\Application Data\Oracle\Java\javapath;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\Program Files\ATI Technologies\ATI.ACE\;C:\Program Files\Skype\Phone\;C:\WINDOWS\system32\WindowsPowerShell\v1.0;C:\jdk\bin;C:\Program Files\TortoiseGit\bin;C:\Program Files\apache-maven-3.3.9\bin;C:\Program Files\apache-ant-1.9.6\bin;C:\Program Files\apache-tomcat-9.0.0.M1\bin;C:\Program Files\PostgreSQL\9.4\bin;C:\Program Files\Heroku\bin;C:\Program Files\git\cmd;."/>
     <property name="java.specification.name" value="Java Platform API Specification"/>
     <property name="java.class.version" value="51.0"/>
     <property name="sun.management.compiler" value="HotSpot Client Compiler"/>
@@ -44,7 +44,7 @@
     <property name="java.vm.specification.version" value="1.7"/>
     <property name="sun.arch.data.model" value="32"/>
     <property name="java.home" value="C:\jdk\jre"/>
-    <property name="sun.java.command" value="org.codehaus.plexus.classworlds.launcher.Launcher clean package spring-boot:run"/>
+    <property name="sun.java.command" value="org.codehaus.plexus.classworlds.launcher.Launcher clean package"/>
     <property name="java.specification.vendor" value="Oracle Corporation"/>
     <property name="user.language" value="en"/>
     <property name="user.language.format" value="ro"/>

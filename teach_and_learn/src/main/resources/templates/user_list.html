@@ -17,16 +17,22 @@
 	src="http://cdn.jsdelivr.net/webjars/jquery-tmpl/beta1.0.0/jquery.tmpl.min.js"
 	th:src="@{/webjars/jquery-tmpl/beta1.0.0/jquery.tmpl.min.js}"></script>
 
+<script
+	src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+
+<style type="text/css">
+</style>
 </head>
 <body>
 	<div class="container">
-		<img src="./static/images/logo.png}" width="80" />
-		
+		<img src="./static/images/logo.png}" th:src="@{images/logo.png}" width="80" />
+
 		<div style='float: right;'
 			th:with="currentUser=${#httpServletRequest.userPrincipal?.name}">
 			<div th:if="${currentUser != null}">
 				<form th:action="@{/logout}" method="post">
-					<input type="submit" value="Log out" />
+					<input type="submit" class="btn btn-default" onclick=""
+						value="Log out" />
 				</form>
 				<p th:text="${currentUser}">sample_user</p>
 			</div>
@@ -40,10 +46,10 @@
 					</div>
 					<ul class="nav navbar-nav">
 						<li><a href="/">Home</a></li>
-						<li><a href="#">Teacher</a></li>
-						<li class="active"><a href="/user">Student</a></li>
+						<li><a href="/teacher">Teacher</a></li>
+						<li><a href="/student">Student</a></li>
 						<li><a href="#">Contact</a></li>
-						<li><a href="/admin">Admin</a></li>
+						<li class="active"><a href="/admin">Admin</a></li>
 					</ul>
 				</div>
 			</nav>
@@ -51,7 +57,7 @@
 			<nav class="navbar navbar-default">
 				<div class="container-fluid">
 					<div class="collapse navbar-collapse">
-						<form action="/user/search" method="post"
+						<form action="/admin/search" method="post"
 							class="navbar-form navbar-right" role="add">
 							<div class="form-group">
 								<input type="text" class="form-control" name="query" id="query"
@@ -62,51 +68,59 @@
 						</form>
 
 						<ul class="nav navbar-nav navbar-left">
-							<li><a href="/user/user_edit"><span
-									class="glyphicon glyphicon-plus" aria-hidden="true">Add
+							<li><a href="/admin/user_edit"><span
+									class="btn btn-default" aria-hidden="true">Add
 										user</span></a></li>
-
 						</ul>
 					</div>
 				</div>
 			</nav>
 
 
-			<table class="table">
-				<tr>
-					<th>ID</th>
-					<th>Username</th>
-					<th>Password</th>
+			<table class="table table-striped header-fixed">
+				<thead>
+					<tr>
+						<th>Role</th>
+						<th>Username
+							<form action="/admin/sorted" method="post">
+								<button class="glyphicon glyphicon-chevron-up" type="submit"
+									name="order" value="firstAscend"></button>
+								<button class="glyphicon glyphicon-chevron-down" type="submit"
+									name="order" value="firstDescend"></button>
+							</form>
+						</th>
+						<th>Password
+							<form action="/admin/sorted" method="post">
+								<button class="glyphicon glyphicon-chevron-up" type="submit"
+									name="order" value="lastAscend"></button>
+								<button class="glyphicon glyphicon-chevron-down" type="submit"
+									name="order" value="lastDescend"></button>
+							</form>
+						</th>
+						<th>&nbsp;</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="user : ${users}">
+						<td th:text="${{user.roles}}" class="filterable-cell"></td>
+						<td th:text="${{user.username}}" class="filterable-cell"></td>
+						<td th:text="${{user.password}}" class="filterable-cell"></td>
+						<td>
+							<div class="dropdown">
+								<button class="btn btn-default dropdown-toggle" type="submit"
+									data-toggle="dropdown">
+									Select action<span class="caret"></span>
+								</button>
+								<ul class="dropdown-menu">
+									<li><a th:href="@{/admin/user_edit(id=${user.id})}">Edit
+											user</a></li>
+									<li><a th:href="@{/admin/user_delete(id=${user.id})}">Delete
+											user</a></li>
+								</ul>
+							</div></td>
 
-					<th>FirstName
-						<form action="/user/sorted" method="post">
-							<button class="glyphicon glyphicon-chevron-up" type="submit"
-								name="order" value="firstAscend"></button>
-							<button class="glyphicon glyphicon-chevron-down" type="submit"
-								name="order" value="firstDescend"></button>
-						</form>
-					</th>
-					<th>LastName
-						<form action="/user/sorted" method="post">
-							<button class="glyphicon glyphicon-chevron-up" type="submit"
-								name="order" value="lastAscend"></button>
-							<button class="glyphicon glyphicon-chevron-down" type="submit"
-								name="order" value="lastDescend"></button>
-						</form>
-					</th>
-					<th>&nbsp;</th>
-				</tr>
-				<tr th:each="user : ${users}">
-					<td th:text="${{user.roles}}"></td>
-					<td th:text="${{user.username}}"></td>
-					<td th:text="${{user.password}}"></td>
-					<td th:text="${{user.firstName}}"></td>
-					<td th:text="${{user.lastName}}"></td>
-					<td><a th:href="@{/user/user_edit(id=${user.id})}"
-						class="glyphicon glyphicon-pencil" aria-hidden="true"> </a> <a
-						th:href="@{/user/user_delete(id=${user.id})}"
-						class="glyphicon glyphicon-remove" aria-hidden="true"> </a></td>
-				</tr>
+					</tr>
+				</tbody>
 			</table>
 		</div>
 	</div>

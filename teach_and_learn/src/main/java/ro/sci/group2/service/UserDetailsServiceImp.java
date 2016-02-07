@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import ro.sci.group2.dao.UserDAO;
 import ro.sci.group2.domain.Role;
 
+
 /**
  * <p>
  * Custom implementation of the

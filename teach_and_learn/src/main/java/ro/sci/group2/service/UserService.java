@@ -62,6 +62,12 @@ public class UserService {
 		User user = dao.findById(id);
 		return user;
 	}
+	
+	public User findByUserName(String username) {
+		User user = dao.findByUsername(username);
+		return user;
+	}
+	
 	public Collection<User> findByName(String query){
 		return dao.searchByName(query);
 	}

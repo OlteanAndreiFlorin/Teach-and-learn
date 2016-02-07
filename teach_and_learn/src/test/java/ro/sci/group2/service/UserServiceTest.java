@@ -42,6 +42,7 @@ public class UserServiceTest {
 		User user = new User();
 		user.setFirstName("Gigi");
 		user.setLastName("Becali");
+		//user.setUsername("moni");
 		User savedUser = service.save(user);
 		Assert.assertTrue(savedUser.getId() > 0);
 		User savedUser2 = service.save(user);

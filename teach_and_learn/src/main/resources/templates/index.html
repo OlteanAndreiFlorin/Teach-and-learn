@@ -11,6 +11,8 @@
 
 <script src="http://cdn.jsdelivr.net/webjars/jquery/2.1.4/jquery.min.js"
 	th:src="@{/webjars/jquery/2.1.4/jquery.min.js}"></script>
+	
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 
 </head>
 <body>
@@ -22,7 +24,7 @@
 			th:with="currentUser=${#httpServletRequest.userPrincipal?.name}">
 			<div th:if="${currentUser != null}">
 				<form th:action="@{/logout}" method="post">
-					<input type="submit" value="Log out" />
+					<input type="submit" class="btn btn-default" onclick="" value="Log out" />
 				</form>
 				<p th:text="${currentUser}">sample_user</p>
 			</div>
@@ -37,8 +39,8 @@
 					</div>
 					<ul class="nav navbar-nav">
 						<li class="active"><a href="/">Home</a></li>
-						<!--  <li><a href="#">Teacher</a></li>-->
-						<li><a href="/user">User</a></li>
+						<li><a href="/teacher">Teacher</a></li>
+						<li><a href="/student">Student</a></li>
 						<li><a href="#">Contact</a></li>
 						<li><a href="/admin">Admin</a></li>
 					</ul>

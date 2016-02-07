@@ -5,9 +5,9 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+
 
 import ro.sci.group2.service.UserDetailsServiceImp;
 
@@ -29,10 +29,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			.csrf().disable()
 			.headers().disable()
 			.authorizeRequests()
-				.antMatchers("/user/user_delete/**").hasRole("ADMIN")
-				//.antMatchers("/user/user_edit/**").hasAnyRole("ADMIN","TEACHER")//<-----HERE
+				.antMatchers("/teacher/**").hasRole("TEACHER")
 				.antMatchers("/","/home").permitAll()
-				.antMatchers("/admin").hasRole("ADMIN")
+				.antMatchers("/admin/**").hasRole("ADMIN")
 				.antMatchers("/user").authenticated()
 				.and()
 			.formLogin().and()
@@ -48,7 +47,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			.inMemoryAuthentication()
 				.withUser("admin")
 					.password("admin")
-					.roles("ADMIN", "TEACHER")
+					.roles("ADMIN")
 				.and()
 				.withUser("user")
 					.password("user")

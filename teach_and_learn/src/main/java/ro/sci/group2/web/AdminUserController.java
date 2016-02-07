@@ -12,8 +12,8 @@ import ro.sci.group2.domain.User;
 import ro.sci.group2.service.UserService;
 
 @Controller
-@RequestMapping("/user")
-public class UserController {
+@RequestMapping("/admin")
+public class AdminUserController {
 	@Autowired
 	UserService userService;
 
@@ -51,7 +51,7 @@ public class UserController {
 		if (u.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_ADMIN"))) {
 			result = new ModelAndView("admin_user_edit");
 		} else {
-			result = new ModelAndView("user_edit");
+			result = new ModelAndView("index");
 		}
 		User user = new User();
 		if (id != null) {
