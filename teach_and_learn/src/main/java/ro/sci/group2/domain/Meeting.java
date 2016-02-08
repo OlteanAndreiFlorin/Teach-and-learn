@@ -2,7 +2,9 @@ package ro.sci.group2.domain;
 
 import java.util.Collection;
 
+import org.joda.time.Interval;
 import org.joda.time.ReadableInterval;
+
 
 /**
  * The meeting class models a meeting that a teacher can initiate inside the
@@ -60,7 +62,7 @@ public class Meeting extends AbstractModel {
 		return meetingInterval;
 	}
 
-	public void setMeetingInterval(ReadableInterval meetingInterval) {
+	public void setMeetingInterval(Interval meetingInterval) {
 		this.meetingInterval = meetingInterval;
 	}
 
