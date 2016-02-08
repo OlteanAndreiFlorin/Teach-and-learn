@@ -2,7 +2,9 @@ package ro.sci.group2.domain;
 
 import java.util.Collection;
 
+import org.joda.time.Interval;
 import org.joda.time.ReadableInterval;
+
 
 /**
  * The meeting class models a meeting that a teacher can initiate inside the
@@ -11,17 +13,17 @@ import org.joda.time.ReadableInterval;
  * meeting,observations that the teacher might add for the meeting the course
  * that will be taught and a list with the attendees;
  * 
- * @author Andrei
+ * @author Andrei 
  *
  */
 public class Meeting extends AbstractModel {
 
-	private Teacher teacher;
+	private User teacher;
 	private String city;
 	private String location;
 	private ReadableInterval meetingInterval;
 	private String observation;
-	private Collection<Student> attendees;
+	private Collection<User> attendees;
 	private Course course;
 
 	public Meeting(long id) {
@@ -32,11 +34,11 @@ public class Meeting extends AbstractModel {
 		this(0);
 	}
 
-	public Teacher getTeacher() {
+	public User getTeacher() {
 		return teacher;
 	}
 
-	public void setTeacher(Teacher teacher) {
+	public void setTeacher(User teacher) {
 		this.teacher = teacher;
 	}
 
@@ -60,7 +62,7 @@ public class Meeting extends AbstractModel {
 		return meetingInterval;
 	}
 
-	public void setMeetingInterval(ReadableInterval meetingInterval) {
+	public void setMeetingInterval(Interval meetingInterval) {
 		this.meetingInterval = meetingInterval;
 	}
 
@@ -72,11 +74,11 @@ public class Meeting extends AbstractModel {
 		this.observation = observation;
 	}
 
-	public Collection<Student> getAttendees() {
+	public Collection<User> getAttendees() {
 		return attendees;
 	}
 
-	public void setAttendees(Collection<Student> attendees) {
+	public void setAttendees(Collection<User> attendees) {
 		this.attendees = attendees;
 	}
 

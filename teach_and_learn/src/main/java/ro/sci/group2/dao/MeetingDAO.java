@@ -20,5 +20,5 @@ public interface MeetingDAO extends BaseDAO<Meeting> {
 	 * @return A collection with all the meetings that happen in the interval
 	 */
 	Collection<Meeting> searchByDate(Interval interval);
-	// Collection<Meeting> searchBySubject(Long id);
+	Collection<Meeting> searchBySubject(Long id);
 }

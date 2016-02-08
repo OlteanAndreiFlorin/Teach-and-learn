@@ -20,21 +20,21 @@
 </head>
 <body>
 	<div class="container">
-		<img src="../static/images/logo.png" width="80"
-			th:src="@{images/logo.png}" />
+		<img src="./static/images/logo.jpg}" width="80"/>
 		
 
 		<div>
 			<nav class="navbar navbar-default">
 				<div class="container-fluid">
 					<div class="navbar-header">
-						<a class="navbar-brand" href="#">Teach and Learn</a>
+						<a class="navbar-brand">Teach and Learn</a>
 					</div>
 					<ul class="nav navbar-nav">
 						<li><a href="/">Home</a></li>
 						<li><a href="#">Teacher</a></li>
 						<li class="active"><a href="/student">Student</a></li>
 						<li><a href="#">Contact</a></li>
+						<li><a href="/admin">Admin</a></li>
 					</ul>
 				</div>
 			</nav>
@@ -42,7 +42,7 @@
 			<nav class="navbar navbar-default">
 				<div class="container-fluid">
 					<div class="collapse navbar-collapse">
-						<form action="/student/search" method="post" class="navbar-form navbar-right" role="add">
+						<form action="/user/search" method="post" class="navbar-form navbar-right" role="add">
 							<div class="form-group">
 								<input type="text" class="form-control" name="query" id="query"
 									placeholder="Search for ..." />
@@ -80,7 +80,7 @@
 					<th>&nbsp;</th>
 				</tr>
 				<tr th:each="student : ${students}">
-					<td th:text="${{student.id}}"></td>
+					<td th:text="${{student.roles}}"></td>
 					<td th:text="${{student.firstName}}"></td>
 					<td th:text="${{student.lastName}}"></td>
 					<td>
