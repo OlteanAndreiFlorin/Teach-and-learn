@@ -8,11 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import ro.sci.group2.TeachAndLearnApplication;
+import ro.sci.group2.ApplicationTest;
 import ro.sci.group2.domain.Course;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = TeachAndLearnApplication.class)
+@SpringApplicationConfiguration(classes = ApplicationTest.class)
 public class CourseServiceTest {
 
 	@Autowired

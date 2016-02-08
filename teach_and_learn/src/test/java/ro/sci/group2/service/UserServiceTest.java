@@ -1,19 +1,23 @@
 package ro.sci.group2.service;
 
+import java.util.Collection;
+
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import ro.sci.group2.TeachAndLearnApplication;
+import ro.sci.group2.ApplicationTest;
 import ro.sci.group2.domain.Course;
+import ro.sci.group2.domain.Gender;
 import ro.sci.group2.domain.User;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = TeachAndLearnApplication.class)
+@SpringApplicationConfiguration(classes = ApplicationTest.class)
 public class UserServiceTest {
 
 	@Autowired
@@ -27,22 +31,52 @@ public class UserServiceTest {
 	}
 
 	@Test
+	public void testEmptyGetAll(){
+		Collection<User> all=service.listAll(); 
+		Assert.assertTrue(all.isEmpty());
+	}
+	@Test
+	public void testFindById(){
+		User user = new User();
+		user.setUsername("Gigi");
+		user.setPassword("Becali");
+		user.setFirstName("");
+		user.setLastName("");
+		user.setAddress("");
+		user.setEmail("");
+		user.setPhone("");
+		user.setGender(Gender.MALE);
+		User savedUser = service.save(user);
+		Assert.assertEquals(savedUser,service.findById(savedUser.getId()) );
+	}
+	@Test
 	public void testSaveNewuser() {
 		User user = new User();
-		user.setFirstName("Gigi");
-		user.setLastName("Becali");
+		user.setUsername("Gigi");
+		user.setPassword("Becali");
+		user.setFirstName("");
+		user.setLastName("");
+		user.setAddress("");
+		user.setEmail("");
+		user.setPhone("");
+		user.setGender(Gender.MALE);
 		User savedUser = service.save(user);
 		Assert.assertTrue(savedUser.getId() > 0);
-		Assert.assertEquals("Gigi", savedUser.getFirstName());
-		Assert.assertEquals("Becali", savedUser.getLastName());
+		Assert.assertEquals("Gigi", savedUser.getUsername());
+		Assert.assertEquals("Becali", savedUser.getPassword());
 	}
 
 	@Test
 	public void testSaveExistinguser() {
 		User user = new User();
-		user.setFirstName("Gigi");
-		user.setLastName("Becali");
-		//user.setUsername("moni");
+		user.setUsername("Gigi");
+		user.setPassword("Becali");
+		user.setFirstName("");
+		user.setLastName("");
+		user.setAddress("");
+		user.setEmail("");
+		user.setPhone("");
+		user.setGender(Gender.MALE);
 		User savedUser = service.save(user);
 		Assert.assertTrue(savedUser.getId() > 0);
 		User savedUser2 = service.save(user);
@@ -50,10 +84,16 @@ public class UserServiceTest {
 	}
 
 	@Test
-	public void testDeleteuser() {
+	public void testDeleteUser() {
 		User user = new User();
-		user.setFirstName("Gigi");
-		user.setLastName("Becali");
+		user.setUsername("Gigi");
+		user.setPassword("Becali");
+		user.setFirstName("");
+		user.setLastName("");
+		user.setAddress("");
+		user.setEmail("");
+		user.setPhone("");
+		user.setGender(Gender.MALE);
 		User savedUser = service.save(user);
 		Assert.assertTrue(service.delete(savedUser.getId()));
 		Assert.assertNull(service.findById(savedUser.getId()));
@@ -62,8 +102,14 @@ public class UserServiceTest {
 	@Test
 	public void testDoubleDeletionuser() {
 		User user = new User();
-		user.setFirstName("Gigi");
-		user.setLastName("Becali");
+		user.setUsername("Gigi");
+		user.setPassword("Becali");
+		user.setFirstName("");
+		user.setLastName("");
+		user.setAddress("");
+		user.setEmail("");
+		user.setPhone("");
+		user.setGender(Gender.MALE);
 		User savedUser = service.save(user);
 		Assert.assertTrue(service.delete(savedUser.getId()));
 		Assert.assertFalse(service.delete(savedUser.getId()));
@@ -78,9 +124,15 @@ public class UserServiceTest {
 	@Test
 	public void testAddCourse() {
 		User user = new User();
+		user.setUsername("Gigi");
+		user.setPassword("Becali");
+		user.setFirstName("");
+		user.setLastName("");
+		user.setAddress("");
+		user.setEmail("");
+		user.setPhone("");
+		user.setGender(Gender.MALE);
 		service.save(user);
-		user.setFirstName("Gigi");
-		user.setLastName("Becali");
 		Course mate = new Course();
 		mate.setName("mate");
 		mate.setLevel(12);
@@ -97,9 +149,15 @@ public class UserServiceTest {
 	@Test
 	public void testDoubleAddCourse() {
 		User user = new User();
+		user.setUsername("Gigi");
+		user.setPassword("Becali");
+		user.setFirstName("");
+		user.setLastName("");
+		user.setAddress("");
+		user.setEmail("");
+		user.setPhone("");
+		user.setGender(Gender.MALE);
 		service.save(user);
-		user.setFirstName("Gigi");
-		user.setLastName("Becali");
 		Course mate = new Course();
 		mate.setName("mate");
 		mate.setLevel(12);
@@ -112,9 +170,15 @@ public class UserServiceTest {
 	@Test
 	public void testRemoveExistingCourse() {
 		User user = new User();
+		user.setUsername("Gigi");
+		user.setPassword("Becali");
+		user.setFirstName("");
+		user.setLastName("");
+		user.setAddress("");
+		user.setEmail("");
+		user.setPhone("");
+		user.setGender(Gender.MALE);
 		service.save(user);
-		user.setFirstName("Gigi");
-		user.setLastName("Becali");
 		Course mate = new Course();
 		mate.setName("mate");
 		mate.setLevel(12);
@@ -129,12 +193,19 @@ public class UserServiceTest {
 		Assert.assertTrue(service.removeCourse(user.getId(), romana));
 		Assert.assertTrue(user.getCourses().isEmpty());
 	}
+
 	@Test
-	public void testDoubleRemoveCourse(){
+	public void testDoubleRemoveCourse() {
 		User user = new User();
+		user.setUsername("Gigi");
+		user.setPassword("Becali");
+		user.setFirstName("");
+		user.setLastName("");
+		user.setAddress("");
+		user.setEmail("");
+		user.setPhone("");
+		user.setGender(Gender.MALE);
 		service.save(user);
-		user.setFirstName("Gigi");
-		user.setLastName("Becali");
 		Course mate = new Course();
 		mate.setName("mate");
 		mate.setLevel(12);
@@ -142,12 +213,19 @@ public class UserServiceTest {
 		Assert.assertTrue(service.removeCourse(user.getId(), mate));
 		Assert.assertFalse(service.removeCourse(user.getId(), mate));
 	}
+
 	@Test
-	public void testRemoveInexistingCourse(){
+	public void testRemoveInexistingCourse() {
 		User user = new User();
+		user.setUsername("Gigi");
+		user.setPassword("Becali");
+		user.setFirstName("");
+		user.setLastName("");
+		user.setAddress("");
+		user.setEmail("");
+		user.setPhone("");
+		user.setGender(Gender.MALE);
 		service.save(user);
-		user.setFirstName("Gigi");
-		user.setLastName("Becali");
 		Course mate = new Course();
 		mate.setName("mate");
 		mate.setLevel(12);
