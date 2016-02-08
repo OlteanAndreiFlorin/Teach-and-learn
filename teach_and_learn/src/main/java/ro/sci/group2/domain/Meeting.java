@@ -11,7 +11,7 @@ import org.joda.time.ReadableInterval;
  * meeting,observations that the teacher might add for the meeting the course
  * that will be taught and a list with the attendees;
  * 
- * @author Andrei
+ * @author Andrei 
  *
  */
 public class Meeting extends AbstractModel {

@@ -16,15 +16,6 @@ public class User extends AbstractModel {
 	private Collection<Role> roles = new LinkedList<>();
 	private Collection<Course> courses = new LinkedList<>();
 
-	public User(long id) {
-		setId(id);
-
-	}
-
-	public User() {
-		this(0);
-	}
-
 	public String getUsername() {
 		return username;
 	}

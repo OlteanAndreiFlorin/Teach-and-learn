@@ -21,7 +21,7 @@ public class TeachAndLearnApplication {
 	}
 
 	@Bean
-	public UserDAO employeeDao() {
+	public UserDAO userDao() {
 		return // new JDBCUserDao("", "", "", "", "");
 
 		new IMUserDAO();
