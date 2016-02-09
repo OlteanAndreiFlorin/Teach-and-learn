@@ -26,6 +26,11 @@ public class CourseServiceTest {
 	}
 
 	@Test
+	public void listEmptyDb() {
+		Assert.assertTrue(service.listAll().isEmpty());
+	}
+
+	@Test
 	public void testSaveNewCourse() {
 		Course course = new Course();
 		course.setName("mate");
@@ -39,28 +44,33 @@ public class CourseServiceTest {
 	@Test
 	public void testSaveExistingCourse() {
 		Course co = new Course();
-		co.setLevel(1);
 		co.setName("romana");
+		co.setLevel(1);
 		Course savedCo = service.save(co);
 		Course savedCo2 = service.save(co);
 		Assert.assertEquals(savedCo, savedCo2);
 	}
-	
+
 	@Test
-	public void testDeletExistingCourse(){
+	public void testDeletExistingCourse() {
 		Course co = new Course();
+		co.setName("Info");
+		co.setLevel(1);
 		service.save(co);
 		Assert.assertTrue(service.delete(co.getId()));
 		Assert.assertNull(service.findById(co.getId()));
 	}
+
 	@Test
-	public void testDeleteInexistingCourse(){
+	public void testDeleteInexistingCourse() {
 		Assert.assertFalse(service.delete(40));
 	}
-	
+
 	@Test
-	public void testMultipleDeleteCourse(){
+	public void testMultipleDeleteCourse() {
 		Course course = new Course();
+		course.setName("Info");
+		course.setLevel(1);
 		service.save(course);
 		Assert.assertTrue(service.delete(course.getId()));
 		Assert.assertFalse(service.delete(course.getId()));

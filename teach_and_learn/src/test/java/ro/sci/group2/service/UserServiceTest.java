@@ -1,10 +1,10 @@
 package ro.sci.group2.service;
 
 import java.util.Collection;
+import java.util.LinkedList;
 
 import org.junit.After;
 import org.junit.Assert;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +14,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import ro.sci.group2.ApplicationTest;
 import ro.sci.group2.domain.Course;
 import ro.sci.group2.domain.Gender;
+import ro.sci.group2.domain.Role;
 import ro.sci.group2.domain.User;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -45,6 +46,10 @@ public class UserServiceTest {
 		user.setAddress("");
 		user.setEmail("");
 		user.setPhone("");
+		Collection<Role> roles=new LinkedList<>();
+		roles.add(Role.ROLE_ADMIN);
+		roles.add(Role.ROLE_STUDENT);
+		user.setRoles(roles);
 		user.setGender(Gender.MALE);
 		User savedUser = service.save(user);
 		Assert.assertEquals(savedUser,service.findById(savedUser.getId()) );
@@ -60,6 +65,10 @@ public class UserServiceTest {
 		user.setEmail("");
 		user.setPhone("");
 		user.setGender(Gender.MALE);
+		Collection<Role> roles=new LinkedList<>();
+		roles.add(Role.ROLE_ADMIN);
+		roles.add(Role.ROLE_STUDENT);
+		user.setRoles(roles);
 		User savedUser = service.save(user);
 		Assert.assertTrue(savedUser.getId() > 0);
 		Assert.assertEquals("Gigi", savedUser.getUsername());
@@ -76,6 +85,10 @@ public class UserServiceTest {
 		user.setAddress("");
 		user.setEmail("");
 		user.setPhone("");
+		Collection<Role> roles=new LinkedList<>();
+		roles.add(Role.ROLE_ADMIN);
+		roles.add(Role.ROLE_STUDENT);
+		user.setRoles(roles);
 		user.setGender(Gender.MALE);
 		User savedUser = service.save(user);
 		Assert.assertTrue(savedUser.getId() > 0);
@@ -93,6 +106,10 @@ public class UserServiceTest {
 		user.setAddress("");
 		user.setEmail("");
 		user.setPhone("");
+		Collection<Role> roles=new LinkedList<>();
+		roles.add(Role.ROLE_ADMIN);
+		roles.add(Role.ROLE_STUDENT);
+		user.setRoles(roles);
 		user.setGender(Gender.MALE);
 		User savedUser = service.save(user);
 		Assert.assertTrue(service.delete(savedUser.getId()));
@@ -109,6 +126,10 @@ public class UserServiceTest {
 		user.setAddress("");
 		user.setEmail("");
 		user.setPhone("");
+		Collection<Role> roles=new LinkedList<>();
+		roles.add(Role.ROLE_ADMIN);
+		roles.add(Role.ROLE_STUDENT);
+		user.setRoles(roles);
 		user.setGender(Gender.MALE);
 		User savedUser = service.save(user);
 		Assert.assertTrue(service.delete(savedUser.getId()));
@@ -131,6 +152,10 @@ public class UserServiceTest {
 		user.setAddress("");
 		user.setEmail("");
 		user.setPhone("");
+		Collection<Role> roles=new LinkedList<>();
+		roles.add(Role.ROLE_ADMIN);
+		roles.add(Role.ROLE_STUDENT);
+		user.setRoles(roles);
 		user.setGender(Gender.MALE);
 		service.save(user);
 		Course mate = new Course();
@@ -156,6 +181,10 @@ public class UserServiceTest {
 		user.setAddress("");
 		user.setEmail("");
 		user.setPhone("");
+		Collection<Role> roles=new LinkedList<>();
+		roles.add(Role.ROLE_ADMIN);
+		roles.add(Role.ROLE_STUDENT);
+		user.setRoles(roles);
 		user.setGender(Gender.MALE);
 		service.save(user);
 		Course mate = new Course();
@@ -177,6 +206,10 @@ public class UserServiceTest {
 		user.setAddress("");
 		user.setEmail("");
 		user.setPhone("");
+		Collection<Role> roles=new LinkedList<>();
+		roles.add(Role.ROLE_ADMIN);
+		roles.add(Role.ROLE_STUDENT);
+		user.setRoles(roles);
 		user.setGender(Gender.MALE);
 		service.save(user);
 		Course mate = new Course();
@@ -204,6 +237,10 @@ public class UserServiceTest {
 		user.setAddress("");
 		user.setEmail("");
 		user.setPhone("");
+		Collection<Role> roles=new LinkedList<>();
+		roles.add(Role.ROLE_ADMIN);
+		roles.add(Role.ROLE_STUDENT);
+		user.setRoles(roles);
 		user.setGender(Gender.MALE);
 		service.save(user);
 		Course mate = new Course();
@@ -225,6 +262,10 @@ public class UserServiceTest {
 		user.setEmail("");
 		user.setPhone("");
 		user.setGender(Gender.MALE);
+		Collection<Role> roles=new LinkedList<>();
+		roles.add(Role.ROLE_ADMIN);
+		roles.add(Role.ROLE_STUDENT);
+		user.setRoles(roles);
 		service.save(user);
 		Course mate = new Course();
 		mate.setName("mate");

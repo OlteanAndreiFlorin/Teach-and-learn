@@ -6,6 +6,7 @@ import java.util.LinkedList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import ro.sci.group2.dao.CourseDAO;
 import ro.sci.group2.dao.UserDAO;
 import ro.sci.group2.domain.Course;
 import ro.sci.group2.domain.User;
@@ -14,6 +15,7 @@ import ro.sci.group2.domain.User;
 public class UserService {
 	@Autowired
 	private UserDAO dao;
+	private CourseDAO courseDao;
 
 	public User save(User user) {
 		return dao.update(user);
@@ -72,8 +74,8 @@ public class UserService {
 		return dao.searchByName(query);
 	}
 
-	public void addCourse(long id, Course course) {
-		User user = dao.findById(id);
+	public void addCourse(long userId, Course course) {
+		User user = dao.findById(userId);
 		Collection<Course> courses = new LinkedList<>(user.getCourses());
 		if (!courses.contains(course)) {
 			courses.add(course);

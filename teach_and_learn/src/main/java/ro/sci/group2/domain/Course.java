@@ -8,7 +8,8 @@ public class Course extends AbstractModel {
 	public Course(long id) {
 		setId(id);
 	}
-	public Course(){
+
+	public Course() {
 		this(0);
 	}
 
@@ -23,26 +24,8 @@ public class Course extends AbstractModel {
 	 *             if the name is not valid
 	 */
 	public void setName(String name) throws IllegalArgumentException {
-		if (!validateName(name)) {
-			throw new IllegalArgumentException("Selected name is not valid");
-		} else {
-			this.name = name;
-		}
-	}
 
-	private boolean validateName(String name) {
-		if (name.isEmpty()) {
-			return false;
-		}
-		if(name.length()<2||name.length()>20){
-			return false;
-		}
-		for (char c : name.toCharArray()) {
-			if (!Character.isLetter(c)) {
-				return false;
-			}
-		}
-		return true;
+		this.name = name;
 
 	}
 
@@ -58,18 +41,9 @@ public class Course extends AbstractModel {
 	 *             between 0 and 12)
 	 */
 	public void setLevel(int level) throws IllegalArgumentException {
-		if (!validateLevel(level)) {
-			throw new IllegalArgumentException("Not a valid level");
-		} else {
-			this.level = level;
-		}
-	}
 
-	private boolean validateLevel(int level) {
-		if (level < 0 || level > 12) {
-			return false;
-		}
-		return true;
+		this.level = level;
+
 	}
 
 	@Override
@@ -99,6 +73,7 @@ public class Course extends AbstractModel {
 			return false;
 		return true;
 	}
+
 	@Override
 	public String toString() {
 		return "Course [name=" + name + ", level=" + level + "]";

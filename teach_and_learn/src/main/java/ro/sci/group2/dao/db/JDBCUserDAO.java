@@ -10,11 +10,14 @@ import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
+import javax.print.attribute.Size2DSyntax;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import ro.sci.group2.dao.UserDAO;
 import ro.sci.group2.domain.Gender;
+import ro.sci.group2.domain.Role;
 import ro.sci.group2.domain.User;
 
 /**
@@ -67,6 +70,13 @@ public class JDBCUserDAO implements UserDAO {
 		user.setEmail(rs.getString("email"));
 		user.setPhone(rs.getString("phone"));
 		user.setGender(Gender.valueOf(rs.getString("gender")));
+		Collection<Role> roles = new LinkedList<>();
+		String dbRole = rs.getString("role");
+		String[] r = dbRole.split(";&;");
+		for (String roleString : r) {
+			roles.add(Role.valueOf((roleString.trim())));
+		}
+		user.setRoles(roles);
 		return user;
 	}
 
@@ -74,7 +84,7 @@ public class JDBCUserDAO implements UserDAO {
 	public Collection<User> getAll() {
 		Connection connection = newConnection();
 		Collection<User> result = new LinkedList<>();
-		try (ResultSet rs = connection.createStatement().executeQuery("select * from test")) {
+		try (ResultSet rs = connection.createStatement().executeQuery("select * from person")) {
 			while (rs.next()) {
 				result.add(extractUser(rs));
 			}
@@ -97,7 +107,7 @@ public class JDBCUserDAO implements UserDAO {
 
 		List<User> result = new LinkedList<>();
 
-		try (ResultSet rs = connection.createStatement().executeQuery("select * from test where id = " + id)) {
+		try (ResultSet rs = connection.createStatement().executeQuery("select * from person where id = " + id)) {
 
 			while (rs.next()) {
 				result.add(extractUser(rs));
@@ -127,14 +137,14 @@ public class JDBCUserDAO implements UserDAO {
 			PreparedStatement ps = null;
 			if (model.getId() > 0) {
 				ps = connection.prepareStatement(
-						"update test set username=?, password=?, first_name=?, last_name=?, address=?, email=?, phone=?, gender = ? "
+						"update person set username=?, password=?, first_name=?, last_name=?, address=?, email=?, phone=?, gender = ?, role=? "
 								+ "where id = ? returning id");
 
 			} else {
 
 				ps = connection.prepareStatement(
-						"insert into test (username, password, first_name, last_name, address, email, phone, gender) "
-								+ "values (?, ?, ?, ?, ?, ?, ?, ?) returning id");
+						"insert into person (username, password, first_name, last_name, address, email, phone, gender, role) "
+								+ "values (?, ?, ?, ?, ?, ?, ?, ?, ?) returning id");
 
 			}
 			ps.setString(1, model.getUsername());
@@ -145,9 +155,14 @@ public class JDBCUserDAO implements UserDAO {
 			ps.setString(6, model.getEmail());
 			ps.setString(7, model.getPhone());
 			ps.setString(8, model.getGender().name());
+			StringBuilder roles = new StringBuilder();
+			for (Role r : model.getRoles()) {
+				roles.append(r.name() + ";&;");
+			}
+			ps.setString(9, roles.toString());
 
 			if (model.getId() > 0) {
-				ps.setLong(9, model.getId());
+				ps.setLong(10, model.getId());
 			}
 
 			ResultSet rs = ps.executeQuery();
@@ -157,7 +172,6 @@ public class JDBCUserDAO implements UserDAO {
 			rs.close();
 			connection.commit();
 		} catch (SQLException ex) {
-			ex.printStackTrace();
 			throw new RuntimeException("Error getting user.", ex);
 		} finally {
 			try {
@@ -175,7 +189,10 @@ public class JDBCUserDAO implements UserDAO {
 		Connection connection = newConnection();
 		try {
 			Statement statement = connection.createStatement();
-			result = statement.execute("delete from test where id = " + model.getId());
+			statement.execute("delete from person where id = " + model.getId());
+			if (statement.getUpdateCount() > -1) {
+				result = true;
+			}
 			connection.commit();
 		} catch (SQLException ex) {
 
@@ -203,7 +220,7 @@ public class JDBCUserDAO implements UserDAO {
 		Collection<User> result = new LinkedList<>();
 
 		try (ResultSet rs = connection.createStatement()
-				.executeQuery("select * from test where lower(first_name || ' ' || last_name) like '%"
+				.executeQuery("select * from person where lower(first_name || ' ' || last_name) like '%"
 						+ query.toLowerCase() + "%'")) {
 
 			while (rs.next()) {
@@ -230,15 +247,15 @@ public class JDBCUserDAO implements UserDAO {
 		List<User> result = new LinkedList<>();
 
 		try (ResultSet rs = connection.createStatement()
-				.executeQuery("select * from test where lower(username) like '%" + username.toLowerCase() + "%'")) {
+				.executeQuery("select * from person where lower(username) like '%" + username.toLowerCase() + "%'")) {
 			while (rs.next()) {
 				result.add(extractUser(rs));
 			}
 			connection.commit();
-		}catch(SQLException ex){
+		} catch (SQLException ex) {
 			throw new RuntimeException("Error getting user", ex);
 		}
-		if(result.size()>1){
+		if (result.size() > 1) {
 			throw new IllegalStateException("Multiple users for username");
 		}
 		return result.isEmpty() ? null : result.get(0);
