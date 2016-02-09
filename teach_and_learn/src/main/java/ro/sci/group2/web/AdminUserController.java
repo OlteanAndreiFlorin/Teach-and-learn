@@ -40,15 +40,7 @@ public class AdminUserController {
 
 	@RequestMapping(method = RequestMethod.POST)
 	public ModelAndView saveuser(User user) {
-		User actual = userService.findById(user.getId());
-		if (actual == null) {
-			userService.save(user);
-		} else {
-			actual.setUsername(user.getUsername());
-			actual.setPassword(user.getPassword());
-			actual.setRoles(user.getRoles());
-			userService.save(actual);
-		}
+		userService.save(user);
 		return list();
 	}
 
