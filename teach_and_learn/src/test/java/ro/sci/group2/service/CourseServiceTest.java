@@ -1,5 +1,8 @@
 package ro.sci.group2.service;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
@@ -10,6 +13,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import ro.sci.group2.ApplicationTest;
 import ro.sci.group2.domain.Course;
+import ro.sci.group2.domain.User;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = ApplicationTest.class)
@@ -20,14 +24,11 @@ public class CourseServiceTest {
 
 	@After
 	public void clenUp() {
-		for (Course c : service.listAll()) {
+		Collection<Course> courses = new ArrayList<Course>(service.listAll());
+
+		for (Course c : courses) {
 			service.delete(c.getId());
 		}
-	}
-
-	@Test
-	public void listEmptyDb() {
-		Assert.assertTrue(service.listAll().isEmpty());
 	}
 
 	@Test
@@ -44,8 +45,8 @@ public class CourseServiceTest {
 	@Test
 	public void testSaveExistingCourse() {
 		Course co = new Course();
-		co.setName("romana");
 		co.setLevel(1);
+		co.setName("romana");
 		Course savedCo = service.save(co);
 		Course savedCo2 = service.save(co);
 		Assert.assertEquals(savedCo, savedCo2);
@@ -54,8 +55,6 @@ public class CourseServiceTest {
 	@Test
 	public void testDeletExistingCourse() {
 		Course co = new Course();
-		co.setName("Info");
-		co.setLevel(1);
 		service.save(co);
 		Assert.assertTrue(service.delete(co.getId()));
 		Assert.assertNull(service.findById(co.getId()));
@@ -69,8 +68,6 @@ public class CourseServiceTest {
 	@Test
 	public void testMultipleDeleteCourse() {
 		Course course = new Course();
-		course.setName("Info");
-		course.setLevel(1);
 		service.save(course);
 		Assert.assertTrue(service.delete(course.getId()));
 		Assert.assertFalse(service.delete(course.getId()));
