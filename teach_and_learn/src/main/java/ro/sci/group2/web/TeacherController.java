@@ -1,6 +1,10 @@
 package ro.sci.group2.web;
 
+import java.util.Collection;
+import java.util.LinkedList;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -9,6 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import ro.sci.group2.annotation.CurrentUser;
 import ro.sci.group2.domain.Course;
+import ro.sci.group2.domain.Role;
 import ro.sci.group2.domain.User;
 import ro.sci.group2.service.CourseService;
 import ro.sci.group2.service.UserService;
@@ -65,6 +70,12 @@ public class TeacherController {
 	
 	@RequestMapping(value="" , method = RequestMethod.POST)
 	public ModelAndView saveuser(User user, @CurrentUser org.springframework.security.core.userdetails.User u) {
+		user.setUsername(u.getUsername());
+		Collection<Role> roles = new LinkedList<>();
+		for(GrantedAuthority auth:u.getAuthorities()){
+			roles.add(Role.valueOf(auth.getAuthority()));
+		}
+		user.setRoles(roles);
 		userService.save(user);
 		ModelAndView view = new ModelAndView("teacher_index");
 		view.addObject(user);
