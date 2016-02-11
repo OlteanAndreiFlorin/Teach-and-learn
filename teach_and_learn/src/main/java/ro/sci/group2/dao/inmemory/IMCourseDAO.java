@@ -4,7 +4,6 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedList;
 
-import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
 
 import ro.sci.group2.dao.CourseDAO;

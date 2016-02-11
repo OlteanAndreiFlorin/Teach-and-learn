@@ -154,8 +154,9 @@ public class JDBCCourseDAO implements CourseDAO {
 			statement.execute("delete from course where id = " + model.getId());
 			if (statement.getUpdateCount() > -1) {
 				result = true;
+				connection.commit();
 			}
-			connection.commit();
+			
 		} catch (SQLException ex) {
 
 			throw new RuntimeException("Error deleting course.", ex);

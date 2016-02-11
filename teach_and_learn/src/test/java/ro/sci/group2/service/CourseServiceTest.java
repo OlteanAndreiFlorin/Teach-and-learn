@@ -54,10 +54,12 @@ public class CourseServiceTest {
 
 	@Test
 	public void testDeletExistingCourse() {
-		Course co = new Course();
-		service.save(co);
-		Assert.assertTrue(service.delete(co.getId()));
-		Assert.assertNull(service.findById(co.getId()));
+		Course course = new Course();
+		course.setLevel(1);
+		course.setName("romana");
+		service.save(course);
+		Assert.assertTrue(service.delete(course.getId()));
+		Assert.assertNull(service.findById(course.getId()));
 	}
 
 	@Test
@@ -68,6 +70,8 @@ public class CourseServiceTest {
 	@Test
 	public void testMultipleDeleteCourse() {
 		Course course = new Course();
+		course.setLevel(1);
+		course.setName("romana");
 		service.save(course);
 		Assert.assertTrue(service.delete(course.getId()));
 		Assert.assertFalse(service.delete(course.getId()));

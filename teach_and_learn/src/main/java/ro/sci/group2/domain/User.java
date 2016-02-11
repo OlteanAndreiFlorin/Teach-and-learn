@@ -3,15 +3,32 @@ package ro.sci.group2.domain;
 import java.util.Collection;
 import java.util.LinkedList;
 
+/**
+ * <p>
+ * User class models user information. An User class instance has the following
+ * default values:
+ * </p>
+ * <ol>
+ * <li>username = "aa";</li>
+ * <li>password = "aaa1!";</li>
+ * <li>firstName = "aa";</li>
+ * <li>lastName = "aa";</li>
+ * <li>address = "aaaaaaaaaa";</li>
+ * <li>phone = "1234567891";</li>
+ * </ol>
+ * 
+ * @author SCI team 2. Java group
+ *
+ */
 public class User extends AbstractModel {
 
-	private String password;
-	private String username;
-	private String firstName;
-	private String lastName;
-	private String address;
+	private String password = "aaa1!";
+	private String username = "aa";
+	private String firstName = "aa";
+	private String lastName = "aa";
+	private String address = "aaaaaaaaaa";
 	private String email;
-	private String phone;
+	private String phone = "1234567891";
 	private Gender gender;
 	private Collection<Role> roles = new LinkedList<>();
 	private Collection<Course> courses = new LinkedList<>();
@@ -19,9 +36,9 @@ public class User extends AbstractModel {
 	public String getUsername() {
 		return username;
 	}
-	
-	public void setUsername(String username){
-		this.username=username;
+
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
 	public String getPassword() {
@@ -96,7 +113,9 @@ public class User extends AbstractModel {
 		this.gender = gender;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#hashCode()
 	 */
 	@Override
@@ -114,7 +133,9 @@ public class User extends AbstractModel {
 		return result;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override
@@ -169,20 +190,19 @@ public class User extends AbstractModel {
 		return true;
 	}
 
-	/*@Override
-	public int hashCode() {
-		return username.hashCode();
-	}
+	// @Override
+	// public int hashCode() {
+	// return username.hashCode();
+	// }
 
-	@Override
-	public boolean equals(Object obj) {
-		if (obj instanceof User) {
-			return username.equals(((User) obj).username);
-		}
-		else {
-			return false;
-		}
-	}*/
-	
-	
+	// @Override
+	// public boolean equals(Object obj) {
+	// if (obj instanceof User) {
+	// return username.equals(((User) obj).username);
+	// }
+	// else {
+	// return false;
+	// }
+	// }
+
 }

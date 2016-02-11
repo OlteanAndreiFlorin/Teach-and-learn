@@ -17,6 +17,7 @@ import ro.sci.group2.domain.Role;
 import ro.sci.group2.domain.User;
 import ro.sci.group2.service.CourseService;
 import ro.sci.group2.service.UserService;
+import ro.sci.group2.service.ValidationException;
 
 @Controller
 @RequestMapping("/teacher")
@@ -69,7 +70,7 @@ public class TeacherController {
 	}
 	
 	@RequestMapping(value="" , method = RequestMethod.POST)
-	public ModelAndView saveuser(User user, @CurrentUser org.springframework.security.core.userdetails.User u) {
+	public ModelAndView saveuser(User user, @CurrentUser org.springframework.security.core.userdetails.User u) throws ValidationException {
 		user.setUsername(u.getUsername());
 		Collection<Role> roles = new LinkedList<>();
 		for(GrantedAuthority auth:u.getAuthorities()){

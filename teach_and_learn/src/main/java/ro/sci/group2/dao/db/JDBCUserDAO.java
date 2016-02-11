@@ -10,15 +10,13 @@ import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
-import javax.print.attribute.Size2DSyntax;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import ro.sci.group2.dao.UserDAO;
 import ro.sci.group2.domain.Gender;
-import ro.sci.group2.domain.Role;
 import ro.sci.group2.domain.User;
+import ro.sci.group2.service.DatabaseManager;
 
 /**
  * JDBC implementation for{@link UserDAO}}
@@ -41,7 +39,6 @@ public class JDBCUserDAO implements UserDAO {
 		this.userName = userName;
 		this.pass = pass;
 	}
-
 	protected Connection newConnection() {
 		try {
 			Class.forName("org.postgresql.Driver").newInstance();
@@ -70,13 +67,9 @@ public class JDBCUserDAO implements UserDAO {
 		user.setEmail(rs.getString("email"));
 		user.setPhone(rs.getString("phone"));
 		user.setGender(Gender.valueOf(rs.getString("gender")));
-		Collection<Role> roles = new LinkedList<>();
-		String dbRole = rs.getString("role");
-		String[] r = dbRole.split(";&;");
-		for (String roleString : r) {
-			roles.add(Role.valueOf((roleString.trim())));
-		}
-		user.setRoles(roles);
+		DatabaseManager manager = new DatabaseManager();
+		user.setRoles(manager.convertStringToRole(rs.getString("role")));
+		user.setCourses(manager.convertStringToCourses(rs.getString("course_id")));
 		return user;
 	}
 
@@ -137,14 +130,14 @@ public class JDBCUserDAO implements UserDAO {
 			PreparedStatement ps = null;
 			if (model.getId() > 0) {
 				ps = connection.prepareStatement(
-						"update person set username=?, password=?, first_name=?, last_name=?, address=?, email=?, phone=?, gender = ?, role=? "
-								+ "where id = ? returning id");
+						"update person set username=?, password=?, first_name=?, last_name=?, address=?, email=?, phone=?, gender = ?, "
+								+ "role=?, course_id=? " + "where id = ? returning id");
 
 			} else {
 
 				ps = connection.prepareStatement(
-						"insert into person (username, password, first_name, last_name, address, email, phone, gender, role) "
-								+ "values (?, ?, ?, ?, ?, ?, ?, ?, ?) returning id");
+						"insert into person (username, password, first_name, last_name, address, email, phone, gender, role, course_id) "
+								+ "values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?) returning id");
 
 			}
 			ps.setString(1, model.getUsername());
@@ -155,14 +148,12 @@ public class JDBCUserDAO implements UserDAO {
 			ps.setString(6, model.getEmail());
 			ps.setString(7, model.getPhone());
 			ps.setString(8, model.getGender().name());
-			StringBuilder roles = new StringBuilder();
-			for (Role r : model.getRoles()) {
-				roles.append(r.name() + ";&;");
-			}
-			ps.setString(9, roles.toString());
+			DatabaseManager manager = new DatabaseManager();
+			ps.setString(9, manager.convertRolesToString(model.getRoles()));
+			ps.setString(10, manager.convertCoursesToStringIds(model.getCourses()));
 
 			if (model.getId() > 0) {
-				ps.setLong(10, model.getId());
+				ps.setLong(11, model.getId());
 			}
 
 			ResultSet rs = ps.executeQuery();
@@ -192,8 +183,9 @@ public class JDBCUserDAO implements UserDAO {
 			statement.execute("delete from person where id = " + model.getId());
 			if (statement.getUpdateCount() > -1) {
 				result = true;
+				connection.commit();
 			}
-			connection.commit();
+			
 		} catch (SQLException ex) {
 
 			throw new RuntimeException("Error deleting user.", ex);

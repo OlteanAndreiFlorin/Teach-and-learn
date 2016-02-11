@@ -15,6 +15,8 @@ import ro.sci.group2.domain.User;
 public class UserService {
 	@Autowired
 	private UserDAO dao;
+	@Autowired
+	private CourseService courseService;
 
 	public User save(User user) throws ValidationException {
 		validateUser(user);
@@ -23,6 +25,39 @@ public class UserService {
 
 	private void validateUser(User user) throws ValidationException {
 		List<String> errors = new LinkedList<String>();
+		if (user.getUsername().length() < 4) {
+			errors.add("Username to short! Should be at least 4 characters long");
+		}
+		if (user.getUsername().length() > 12) {
+			errors.add("Username too long! Should be  less than 12 characters long");
+		}
+		if (user.getPassword().length() < 5) {
+			errors.add("Password too short! Set it with at least 4 characters");
+		}
+		if (user.getPassword().length() > 15) {
+			errors.add("Password too long! Set it with less than 12 characters");
+		}
+		boolean found = false;
+		for (Character c : user.getPassword().toCharArray()) {
+			if (Character.isDigit(c)) {
+				found = true;
+				break;
+			} 
+		}
+		if(!found){
+			errors.add("Password must contain at least one digit");
+		}
+		String[] symbols = { "!", "@", "#", "$", "%" };
+		found = false;
+		for (String s : symbols) {
+			if (user.getPassword().contains(s)) {
+				found = true;
+				break;
+			}
+		}
+		if (!found) {
+			errors.add("Password must contain at least one of these symbols ! @ # $ % ");
+		}
 		if (user.getFirstName().length() < 2) {
 			errors.add("First name should be at least 2 characters long");
 		}
@@ -48,12 +83,6 @@ public class UserService {
 		}
 		if (user.getAddress().length() < 10) {
 			errors.add("Are you sure you typed in the right address? It contains only 10 letters");
-		}
-		if (user.getPassword().length() < 4) {
-			errors.add("Password too short! Set it with at least 4 characters");
-		}
-		if (user.getPassword().length() > 12) {
-			errors.add("Password too long! Set it with less than 12 characters");
 		}
 		if (!errors.isEmpty()) {
 			throw new ValidationException(errors.toArray(new String[] {}));
@@ -116,11 +145,20 @@ public class UserService {
 
 	public void addCourse(long id, Course course) {
 		User user = dao.findById(id);
+		if (!courseService.listAll().contains(course)) {
+			courseService.save(course);
+		}
 		Collection<Course> courses = new LinkedList<>(user.getCourses());
 		if (!courses.contains(course)) {
 			courses.add(course);
 			user.setCourses(courses);
+			try {
+				save(user);
+			} catch (ValidationException e) {
+				e.printStackTrace();
+			}
 		}
+
 	}
 
 	public boolean removeCourse(long id, Course course) {
@@ -128,6 +166,11 @@ public class UserService {
 		Collection<Course> courses = new LinkedList<>(user.getCourses());
 		if (courses.remove(course)) {
 			user.setCourses(courses);
+			try {
+				save(user);
+			} catch (ValidationException e) {
+				e.printStackTrace();
+			}
 			return true;
 		} else {
 			return false;

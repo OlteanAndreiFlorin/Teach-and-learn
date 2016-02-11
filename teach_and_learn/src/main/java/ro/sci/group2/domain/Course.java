@@ -20,10 +20,8 @@ public class Course extends AbstractModel {
 	/**
 	 * 
 	 * @param name
-	 * @throws IllegalArgumentException
-	 *             if the name is not valid
 	 */
-	public void setName(String name) throws IllegalArgumentException {
+	public void setName(String name) {
 
 		this.name = name;
 
@@ -36,11 +34,8 @@ public class Course extends AbstractModel {
 	/**
 	 * 
 	 * @param level
-	 * @throws IllegalArgumentException
-	 *             if the subject level is not valid (must be integer number
-	 *             between 0 and 12)
 	 */
-	public void setLevel(int level) throws IllegalArgumentException {
+	public void setLevel(int level) {
 
 		this.level = level;
 
@@ -59,8 +54,6 @@ public class Course extends AbstractModel {
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
-		if (!super.equals(obj))
-			return false;
 		if (getClass() != obj.getClass())
 			return false;
 		Course other = (Course) obj;
