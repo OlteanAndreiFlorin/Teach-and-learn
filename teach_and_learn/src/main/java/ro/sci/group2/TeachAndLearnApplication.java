@@ -35,7 +35,7 @@ public class TeachAndLearnApplication {
 	@Bean
 	public CourseDAO courseDao() {
 		return // new IMCourseDAO();
-		new JDBCCourseDAO("ec2-54-225-165-132.compute-1.amazonaws.com", "5432", "dfqrqj6ph57snt", "ycrkbiarkashvd",
-				"rOPqWXR3ddgI7Xry7u9HGLiIK3");
+		new JDBCCourseDAO("ec2-54-83-12-22.compute-1.amazonaws.com", "5432", "d1vssoh84qkbg3", "vacmpcjhlpcnft",
+				"6ZAEauN0X589o05fxrypEIl2v_");
 	}
 }
