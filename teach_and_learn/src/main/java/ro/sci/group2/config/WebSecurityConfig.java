@@ -30,9 +30,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			.headers().disable()
 			.authorizeRequests()
 				.antMatchers("/teacher/**").hasRole("TEACHER")
-				.antMatchers("/","/home").permitAll()
 				.antMatchers("/admin/**").hasRole("ADMIN")
 				.antMatchers("/user").authenticated()
+				.antMatchers("/","/home").permitAll()
 				.and()
 			.formLogin().and()
 			.httpBasic();

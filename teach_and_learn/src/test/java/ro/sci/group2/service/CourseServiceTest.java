@@ -1,5 +1,8 @@
 package ro.sci.group2.service;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
@@ -10,6 +13,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import ro.sci.group2.ApplicationTest;
 import ro.sci.group2.domain.Course;
+import ro.sci.group2.domain.User;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = ApplicationTest.class)
@@ -20,7 +24,9 @@ public class CourseServiceTest {
 
 	@After
 	public void clenUp() {
-		for (Course c : service.listAll()) {
+		Collection<Course> courses = new ArrayList<Course>(service.listAll());
+
+		for (Course c : courses) {
 			service.delete(c.getId());
 		}
 	}
@@ -45,22 +51,27 @@ public class CourseServiceTest {
 		Course savedCo2 = service.save(co);
 		Assert.assertEquals(savedCo, savedCo2);
 	}
-	
+
 	@Test
-	public void testDeletExistingCourse(){
-		Course co = new Course();
-		service.save(co);
-		Assert.assertTrue(service.delete(co.getId()));
-		Assert.assertNull(service.findById(co.getId()));
+	public void testDeletExistingCourse() {
+		Course course = new Course();
+		course.setLevel(1);
+		course.setName("romana");
+		service.save(course);
+		Assert.assertTrue(service.delete(course.getId()));
+		Assert.assertNull(service.findById(course.getId()));
 	}
+
 	@Test
-	public void testDeleteInexistingCourse(){
+	public void testDeleteInexistingCourse() {
 		Assert.assertFalse(service.delete(40));
 	}
-	
+
 	@Test
-	public void testMultipleDeleteCourse(){
+	public void testMultipleDeleteCourse() {
 		Course course = new Course();
+		course.setLevel(1);
+		course.setName("romana");
 		service.save(course);
 		Assert.assertTrue(service.delete(course.getId()));
 		Assert.assertFalse(service.delete(course.getId()));

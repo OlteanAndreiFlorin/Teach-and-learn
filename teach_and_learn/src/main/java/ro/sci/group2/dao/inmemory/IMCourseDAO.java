@@ -4,13 +4,11 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedList;
 
-import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
 
 import ro.sci.group2.dao.CourseDAO;
 import ro.sci.group2.domain.Course;
 
-@Repository
 public class IMCourseDAO extends IMBaseDAO<Course> implements CourseDAO {
 
 	@Override

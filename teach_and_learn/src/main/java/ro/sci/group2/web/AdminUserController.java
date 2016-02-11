@@ -10,6 +10,7 @@ import org.springframework.web.servlet.ModelAndView;
 import ro.sci.group2.annotation.CurrentUser;
 import ro.sci.group2.domain.User;
 import ro.sci.group2.service.UserService;
+import ro.sci.group2.service.ValidationException;
 
 @Controller
 @RequestMapping("/admin")
@@ -39,7 +40,7 @@ public class AdminUserController {
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
-	public ModelAndView saveuser(User user) {
+	public ModelAndView saveuser(User user) throws ValidationException {
 		User actual = userService.findById(user.getId());
 		if (actual == null) {
 			userService.save(user);
