@@ -2,13 +2,12 @@ package ro.sci.group2.dao;
 
 import java.util.Collection;
 
-import org.joda.time.Interval;
-
+import ro.sci.group2.domain.Course;
 import ro.sci.group2.domain.Meeting;
 
 public interface MeetingDAO extends BaseDAO<Meeting> {
 
-	Collection<Meeting> searchByTeacher(String query);
+	Collection<Meeting> searchByTeacher(Long id);
 	Collection<Meeting> searchByCity(String query);
 
 	/**
@@ -19,6 +18,7 @@ public interface MeetingDAO extends BaseDAO<Meeting> {
 	 *      Joda-Interval</a> the interval in which to find meetings
 	 * @return A collection with all the meetings that happen in the interval
 	 */
-	Collection<Meeting> searchByDate(Interval interval);
-	Collection<Meeting> searchBySubject(Long id);
+	Collection<Meeting> searchByDate(String interval);
+	Collection<Meeting> searchByCourse(Course course);
+	Collection<Meeting> searchByAttendee(Long id);
 }

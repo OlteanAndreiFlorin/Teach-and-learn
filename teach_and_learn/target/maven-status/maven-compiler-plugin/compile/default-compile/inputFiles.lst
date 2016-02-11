@@ -1,23 +1,27 @@
-c:\Documents and Settings\rlu\git\Teach-and-learn\teach\teach_and_learn\src\main\java\ro\sci\group2\domain\User.java
-c:\Documents and Settings\rlu\git\Teach-and-learn\teach\teach_and_learn\src\main\java\ro\sci\group2\service\UserDetailsServiceImp.java
-c:\Documents and Settings\rlu\git\Teach-and-learn\teach\teach_and_learn\src\main\java\ro\sci\group2\dao\CourseDAO.java
-c:\Documents and Settings\rlu\git\Teach-and-learn\teach\teach_and_learn\src\main\java\ro\sci\group2\domain\Course.java
-c:\Documents and Settings\rlu\git\Teach-and-learn\teach\teach_and_learn\src\main\java\ro\sci\group2\service\UserSorter.java
-c:\Documents and Settings\rlu\git\Teach-and-learn\teach\teach_and_learn\src\main\java\ro\sci\group2\dao\BaseDAO.java
-c:\Documents and Settings\rlu\git\Teach-and-learn\teach\teach_and_learn\src\main\java\ro\sci\group2\web\AdminUserController.java
-c:\Documents and Settings\rlu\git\Teach-and-learn\teach\teach_and_learn\src\main\java\ro\sci\group2\annotation\CurrentUser.java
-c:\Documents and Settings\rlu\git\Teach-and-learn\teach\teach_and_learn\src\main\java\ro\sci\group2\web\IndexController.java
-c:\Documents and Settings\rlu\git\Teach-and-learn\teach\teach_and_learn\src\main\java\ro\sci\group2\config\WebSecurityConfig.java
-c:\Documents and Settings\rlu\git\Teach-and-learn\teach\teach_and_learn\src\main\java\ro\sci\group2\web\TeacherController.java
-c:\Documents and Settings\rlu\git\Teach-and-learn\teach\teach_and_learn\src\main\java\ro\sci\group2\service\UserService.java
-c:\Documents and Settings\rlu\git\Teach-and-learn\teach\teach_and_learn\src\main\java\ro\sci\group2\dao\inmemory\IMBaseDAO.java
-c:\Documents and Settings\rlu\git\Teach-and-learn\teach\teach_and_learn\src\main\java\ro\sci\group2\domain\Meeting.java
-c:\Documents and Settings\rlu\git\Teach-and-learn\teach\teach_and_learn\src\main\java\ro\sci\group2\dao\inmemory\IMCourseDAO.java
-c:\Documents and Settings\rlu\git\Teach-and-learn\teach\teach_and_learn\src\main\java\ro\sci\group2\domain\Gender.java
-c:\Documents and Settings\rlu\git\Teach-and-learn\teach\teach_and_learn\src\main\java\ro\sci\group2\dao\MeetingDAO.java
-c:\Documents and Settings\rlu\git\Teach-and-learn\teach\teach_and_learn\src\main\java\ro\sci\group2\domain\AbstractModel.java
-c:\Documents and Settings\rlu\git\Teach-and-learn\teach\teach_and_learn\src\main\java\ro\sci\group2\dao\UserDAO.java
-c:\Documents and Settings\rlu\git\Teach-and-learn\teach\teach_and_learn\src\main\java\ro\sci\group2\service\CourseService.java
-c:\Documents and Settings\rlu\git\Teach-and-learn\teach\teach_and_learn\src\main\java\ro\sci\group2\TeachAndLearnApplication.java
-c:\Documents and Settings\rlu\git\Teach-and-learn\teach\teach_and_learn\src\main\java\ro\sci\group2\dao\inmemory\IMUserDAO.java
-c:\Documents and Settings\rlu\git\Teach-and-learn\teach\teach_and_learn\src\main\java\ro\sci\group2\domain\Role.java
+C:\Users\oltea\Desktop\Discarded\New folder\teach_and_learn_with_meetings\teach_and_learn\src\main\java\ro\sci\group2\service\UserService.java
+C:\Users\oltea\Desktop\Discarded\New folder\teach_and_learn_with_meetings\teach_and_learn\src\main\java\ro\sci\group2\dao\CourseDAO.java
+C:\Users\oltea\Desktop\Discarded\New folder\teach_and_learn_with_meetings\teach_and_learn\src\main\java\ro\sci\group2\web\IndexController.java
+C:\Users\oltea\Desktop\Discarded\New folder\teach_and_learn_with_meetings\teach_and_learn\src\main\java\ro\sci\group2\dao\inmemory\IMBaseDAO.java
+C:\Users\oltea\Desktop\Discarded\New folder\teach_and_learn_with_meetings\teach_and_learn\src\main\java\ro\sci\group2\web\AdminUserController.java
+C:\Users\oltea\Desktop\Discarded\New folder\teach_and_learn_with_meetings\teach_and_learn\src\main\java\ro\sci\group2\TeachAndLearnApplication.java
+C:\Users\oltea\Desktop\Discarded\New folder\teach_and_learn_with_meetings\teach_and_learn\src\main\java\ro\sci\group2\dao\db\JDBCCourseDAO.java
+C:\Users\oltea\Desktop\Discarded\New folder\teach_and_learn_with_meetings\teach_and_learn\src\main\java\ro\sci\group2\annotation\CurrentUser.java
+C:\Users\oltea\Desktop\Discarded\New folder\teach_and_learn_with_meetings\teach_and_learn\src\main\java\ro\sci\group2\service\MeetingService.java
+C:\Users\oltea\Desktop\Discarded\New folder\teach_and_learn_with_meetings\teach_and_learn\src\main\java\ro\sci\group2\dao\db\JDBCUserDAO.java
+C:\Users\oltea\Desktop\Discarded\New folder\teach_and_learn_with_meetings\teach_and_learn\src\main\java\ro\sci\group2\domain\Role.java
+C:\Users\oltea\Desktop\Discarded\New folder\teach_and_learn_with_meetings\teach_and_learn\src\main\java\ro\sci\group2\service\UserSorter.java
+C:\Users\oltea\Desktop\Discarded\New folder\teach_and_learn_with_meetings\teach_and_learn\src\main\java\ro\sci\group2\dao\UserDAO.java
+C:\Users\oltea\Desktop\Discarded\New folder\teach_and_learn_with_meetings\teach_and_learn\src\main\java\ro\sci\group2\service\UserDetailsServiceImp.java
+C:\Users\oltea\Desktop\Discarded\New folder\teach_and_learn_with_meetings\teach_and_learn\src\main\java\ro\sci\group2\config\WebSecurityConfig.java
+C:\Users\oltea\Desktop\Discarded\New folder\teach_and_learn_with_meetings\teach_and_learn\src\main\java\ro\sci\group2\dao\BaseDAO.java
+C:\Users\oltea\Desktop\Discarded\New folder\teach_and_learn_with_meetings\teach_and_learn\src\main\java\ro\sci\group2\web\TeacherController.java
+C:\Users\oltea\Desktop\Discarded\New folder\teach_and_learn_with_meetings\teach_and_learn\src\main\java\ro\sci\group2\dao\inmemory\IMMeetingDAO.java
+C:\Users\oltea\Desktop\Discarded\New folder\teach_and_learn_with_meetings\teach_and_learn\src\main\java\ro\sci\group2\dao\inmemory\IMCourseDAO.java
+C:\Users\oltea\Desktop\Discarded\New folder\teach_and_learn_with_meetings\teach_and_learn\src\main\java\ro\sci\group2\dao\MeetingDAO.java
+C:\Users\oltea\Desktop\Discarded\New folder\teach_and_learn_with_meetings\teach_and_learn\src\main\java\ro\sci\group2\service\CourseService.java
+C:\Users\oltea\Desktop\Discarded\New folder\teach_and_learn_with_meetings\teach_and_learn\src\main\java\ro\sci\group2\domain\AbstractModel.java
+C:\Users\oltea\Desktop\Discarded\New folder\teach_and_learn_with_meetings\teach_and_learn\src\main\java\ro\sci\group2\domain\Meeting.java
+C:\Users\oltea\Desktop\Discarded\New folder\teach_and_learn_with_meetings\teach_and_learn\src\main\java\ro\sci\group2\domain\User.java
+C:\Users\oltea\Desktop\Discarded\New folder\teach_and_learn_with_meetings\teach_and_learn\src\main\java\ro\sci\group2\domain\Course.java
+C:\Users\oltea\Desktop\Discarded\New folder\teach_and_learn_with_meetings\teach_and_learn\src\main\java\ro\sci\group2\dao\inmemory\IMUserDAO.java
+C:\Users\oltea\Desktop\Discarded\New folder\teach_and_learn_with_meetings\teach_and_learn\src\main\java\ro\sci\group2\domain\Gender.java

@@ -65,7 +65,8 @@
 		<div class="container-fluid">
 			<div class="collapse navbar-collapse">
 				<ul class="nav navbar-nav navbar-left">
-					<li><a th:href="@{/teacher/teacher_course_create(id=${user.id})}"><span
+					<li><a
+						th:href="@{/teacher/teacher_course_create(id=${user.id})}"><span
 							class="btn btn-default" aria-hidden="true">Add new course</span></a></li>
 				</ul>
 			</div>
@@ -86,17 +87,19 @@
 				<table class="table table-striped">
 					<thead>
 						<tr>
-							<th class="col-md-2">Course name</th>
-							<th class="col-md-1">Level</th>
+							<th class="col-md-3">Course name</th>
+							<th class="col-md-3">Level</th>
+							<th class="col-md-1">Remove</th>
 						</tr>
 					</thead>
 					<tbody>
 						<tr th:each="teacherCourse : ${teacherCourses}">
-							<td th:text="${{teacherCourse.name}}" class="col-md-2"></td>
-							<td th:text="${{teacherCourse.level}}" class="col-md-1"></td>
+							<td th:text="${{teacherCourse.name}}" class="col-md-3"></td>
+							<td th:text="${{teacherCourse.level}}" class="col-md-3"></td>
 							<td><a
-								th:href="@{/teacher/teacher_course_remove(id=${user.id},name=${teacherCourse.name},level=${teacherCourse.level})}"
-								class="glyphicon glyphicon-triangle-right" aria-hidden="true"> </a></td>
+								th:href="@{/teacher/teacher_course_remove(id=${teacherCourse.id})}"
+								class="glyphicon glyphicon-triangle-right" aria-hidden="true">
+							</a></td>
 						</tr>
 					</tbody>
 				</table>
@@ -108,25 +111,26 @@
 				<table class="table table-striped">
 					<thead>
 						<tr>
-							<th class="col-md-2">Course name</th>
-							<th class="col-md-1">Level</th>
+							<th class="col-md-1">Add</th>
+							<th class="col-md-3">Course name</th>
+							<th class="col-md-3">Level</th>
 						</tr>
 					</thead>
 					<tbody>
 						<tr th:each="baseCourse : ${baseCourses}">
 							<td><a
-								th:href="@{/teacher/teacher_courses_add(id=${user.id},name=${baseCourse.name},level=${baseCourse.level})}"
-								class="glyphicon glyphicon-triangle-left" aria-hidden="true"> </a></td>
-							<td th:text="${{baseCourse.name}}" class="col-md-2"></td>
-							<td th:text="${{baseCourse.level}}" class="col-md-1"></td>
+								th:href="@{/teacher/teacher_courses_add(id=${baseCourse.id})}"
+								class="glyphicon glyphicon-triangle-left" aria-hidden="true">
+							</a></td>
+							<td th:text="${{baseCourse.name}}" class="col-md-3"></td>
+							<td th:text="${{baseCourse.level}}" class="col-md-3"></td>
 						</tr>
 					</tbody>
 				</table>
 			</div>
 		</div>
-		
-		<input type="hidden" th:value="${user.id}" name="id" />
 
+		<input type="hidden" th:value="${user.id}" name="id" />
 
 	</form>
 
