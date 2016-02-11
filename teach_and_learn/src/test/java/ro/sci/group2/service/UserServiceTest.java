@@ -54,6 +54,17 @@ public class UserServiceTest {
 			service.delete(user.getId());
 		}
 	}
+	
+	@Test
+	public void testAdminCreateUser() throws ValidationException{
+		User u = new User();
+		u.setUsername("admin");
+		u.setPassword("admin!1");
+		Collection<Role> rol=new LinkedList<Role>();
+		rol.add(Role.ROLE_ADMIN);
+		u.setRoles(rol);
+		service.save(u);
+	}
 
 	@Test
 	public void testEmptyGetAll() {

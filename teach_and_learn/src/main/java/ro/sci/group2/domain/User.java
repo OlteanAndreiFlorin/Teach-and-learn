@@ -29,7 +29,7 @@ public class User extends AbstractModel {
 	private String address = "aaaaaaaaaa";
 	private String email;
 	private String phone = "1234567891";
-	private Gender gender;
+	private Gender gender = Gender.UNSPECIFIED;
 	private Collection<Role> roles = new LinkedList<>();
 	private Collection<Course> courses = new LinkedList<>();
 
