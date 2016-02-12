@@ -234,7 +234,7 @@ public class TeacherController {
 		User user = new User();
 		if (id != null) {
 			user = userService.findByUserName(u.getUsername());
-			userService.addCourse(user.getId(), courseService.findById(id));
+			userService.removeCourse(user.getId(), courseService.findById(id));
 		}
 		view.addObject("user", user);
 		view.addObject("teacherCourses", user.getCourses());
