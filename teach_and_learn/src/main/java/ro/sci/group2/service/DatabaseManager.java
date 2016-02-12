@@ -3,10 +3,14 @@ package ro.sci.group2.service;
 import java.util.Collection;
 import java.util.LinkedList;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import ro.sci.group2.dao.CourseDAO;
-import ro.sci.group2.dao.db.JDBCCourseDAO;
+import ro.sci.group2.dao.UserDAO;
 import ro.sci.group2.domain.Course;
 import ro.sci.group2.domain.Role;
+import ro.sci.group2.domain.User;
 
 /**
  * <p>
@@ -27,11 +31,19 @@ import ro.sci.group2.domain.Role;
  * @author Oltean Andrei
  *
  */
+@Component
 public class DatabaseManager {
 
-	private CourseDAO courseDao = new JDBCCourseDAO("ec2-54-83-12-22.compute-1.amazonaws.com", "5432", "d1vssoh84qkbg3", "vacmpcjhlpcnft",
-			"6ZAEauN0X589o05fxrypEIl2v_");
-	//new JDBCCourseDAO("localhost", "5432", "test", "test", "test");
+	@Autowired
+	private CourseDAO courseDao; // = new
+									// JDBCCourseDAO("ec2-54-83-12-22.compute-1.amazonaws.com",
+									// "5432", "d1vssoh84qkbg3",
+									// "vacmpcjhlpcnft",
+	// "6ZAEauN0X589o05fxrypEIl2v_");
+	// new JDBCCourseDAO("localhost", "5432", "test", "test", "test");
+
+	@Autowired
+	private UserDAO userDao;
 
 	public Collection<Role> convertStringToRole(String dbData) {
 		Collection<Role> roles = new LinkedList<>();
@@ -87,5 +99,30 @@ public class DatabaseManager {
 			}
 		}
 		return courses;
+	}
+
+	public User findTeacher(Long id) {
+		return userDao.findById(id);
+	}
+
+	public Course findCourse(long id) {
+		return courseDao.findById(id);
+	}
+
+	public Collection<User> convertStringToUsers(String dbUsers) {
+		Collection<User> users = new LinkedList<>();
+		if(dbUsers.isEmpty()){
+			return users;
+		}
+		String[] s = dbUsers.split(";&;");
+		for(String stringId:s){
+			Long id = Long.parseLong(stringId);
+			if(userDao.findById(id) == null){
+				throw new IllegalStateException("User not found in db while converting Users for meeting!");
+			}else{
+				users.add(userDao.findById(id));
+			}
+		}
+		return users;
 	}
 }

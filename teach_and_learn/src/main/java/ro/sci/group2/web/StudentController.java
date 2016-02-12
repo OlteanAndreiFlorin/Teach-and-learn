@@ -20,6 +20,7 @@ import ro.sci.group2.domain.User;
 import ro.sci.group2.service.CourseService;
 import ro.sci.group2.service.MeetingService;
 import ro.sci.group2.service.UserService;
+import ro.sci.group2.service.ValidationException;
 
 @Controller
 @RequestMapping("/student")
@@ -87,8 +88,7 @@ public class StudentController {
 		}
 		view.addObject("user", user);
 		Collection<Meeting> listOfMeetings = meetingService.listAll();
-		Collection<Meeting> meetings = listOfMeetings;
-		meetings.clear();
+		Collection<Meeting> meetings= new LinkedList<>();
 		Collection<Course> listOfCourses = user.getCourses();
 		for (Iterator<Course> iter = listOfCourses.iterator(); iter.hasNext();) {
 			Course course = iter.next();
@@ -143,7 +143,7 @@ public class StudentController {
 	}
 
 	@RequestMapping(value = "", method = RequestMethod.POST)
-	public ModelAndView saveuser(User user, @CurrentUser org.springframework.security.core.userdetails.User u) {
+	public ModelAndView saveuser(User user, @CurrentUser org.springframework.security.core.userdetails.User u) throws ValidationException {
 		user.setUsername(u.getUsername());
 		Collection<Role> roles = new LinkedList<>();
 		for (GrantedAuthority auth : u.getAuthorities()) {

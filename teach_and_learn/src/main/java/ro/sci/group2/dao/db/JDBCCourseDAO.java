@@ -17,7 +17,7 @@ import ro.sci.group2.dao.CourseDAO;
 import ro.sci.group2.domain.Course;
 
 public class JDBCCourseDAO implements CourseDAO {
-	private static final Logger LOGGER = LoggerFactory.getLogger(JDBCUserDAO.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(JDBCCourseDAO.class);
 	private String host;
 	private String port;
 	private String dbName;

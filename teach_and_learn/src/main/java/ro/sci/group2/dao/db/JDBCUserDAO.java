@@ -39,6 +39,7 @@ public class JDBCUserDAO implements UserDAO {
 		this.userName = userName;
 		this.pass = pass;
 	}
+
 	protected Connection newConnection() {
 		try {
 			Class.forName("org.postgresql.Driver").newInstance();
@@ -185,7 +186,7 @@ public class JDBCUserDAO implements UserDAO {
 				result = true;
 				connection.commit();
 			}
-			
+
 		} catch (SQLException ex) {
 
 			throw new RuntimeException("Error deleting user.", ex);
@@ -222,6 +223,12 @@ public class JDBCUserDAO implements UserDAO {
 		} catch (SQLException ex) {
 
 			throw new RuntimeException("Error getting user.", ex);
+		} finally {
+			try {
+				connection.close();
+			} catch (Exception ex) {
+
+			}
 		}
 
 		return result;
@@ -246,6 +253,12 @@ public class JDBCUserDAO implements UserDAO {
 			connection.commit();
 		} catch (SQLException ex) {
 			throw new RuntimeException("Error getting user", ex);
+		}finally{
+			try{
+				connection.close();
+			}catch(Exception ex){
+				
+			}
 		}
 		if (result.size() > 1) {
 			throw new IllegalStateException("Multiple users for username");
