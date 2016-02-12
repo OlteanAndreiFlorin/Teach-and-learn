@@ -222,6 +222,12 @@ public class JDBCUserDAO implements UserDAO {
 		} catch (SQLException ex) {
 
 			throw new RuntimeException("Error getting user.", ex);
+		}finally {
+			try {
+				connection.close();
+			} catch (Exception ex) {
+
+			}
 		}
 
 		return result;
@@ -246,6 +252,12 @@ public class JDBCUserDAO implements UserDAO {
 			connection.commit();
 		} catch (SQLException ex) {
 			throw new RuntimeException("Error getting user", ex);
+		}finally {
+			try {
+				connection.close();
+			} catch (Exception ex) {
+
+			}
 		}
 		if (result.size() > 1) {
 			throw new IllegalStateException("Multiple users for username");
