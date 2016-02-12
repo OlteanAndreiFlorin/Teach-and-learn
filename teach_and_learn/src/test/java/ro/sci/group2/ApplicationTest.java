@@ -24,14 +24,14 @@ public class ApplicationTest {
 
 	@Bean
 	public UserDAO userDao() {
-		return new IMUserDAO();
-		// new JDBCUserDAO("localhost", "5432", "test", "test", "test");
+		return //new IMUserDAO();
+		new JDBCUserDAO("localhost", "5432", "test", "test", "test");
 	}
 
 	@Bean
 	public CourseDAO courseDao() {
-		return new IMCourseDAO();
-		// new JDBCCourseDAO("localhost", "5432", "test", "test", "test");
+		return //new IMCourseDAO();
+		new JDBCCourseDAO("localhost", "5432", "test", "test", "test");
 	}
 
 }

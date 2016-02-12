@@ -27,15 +27,17 @@ public class TeachAndLearnApplication {
 	@Bean
 	public UserDAO userDao() {
 		return // new IMUserDAO();
-		new JDBCUserDAO("ec2-54-83-12-22.compute-1.amazonaws.com", "5432", "d1vssoh84qkbg3", "vacmpcjhlpcnft",
-				"6ZAEauN0X589o05fxrypEIl2v_");
+//		new JDBCUserDAO("ec2-54-83-12-22.compute-1.amazonaws.com", "5432", "d1vssoh84qkbg3", "vacmpcjhlpcnft",
+//				"6ZAEauN0X589o05fxrypEIl2v_");
+		new JDBCUserDAO("localhost", "5432", "test", "test", "test");
 
 	}
 
 	@Bean
 	public CourseDAO courseDao() {
 		return // new IMCourseDAO();
-		new JDBCCourseDAO("ec2-54-83-12-22.compute-1.amazonaws.com", "5432", "d1vssoh84qkbg3", "vacmpcjhlpcnft",
-				"6ZAEauN0X589o05fxrypEIl2v_");
+//		new JDBCCourseDAO("ec2-54-83-12-22.compute-1.amazonaws.com", "5432", "d1vssoh84qkbg3", "vacmpcjhlpcnft",
+//				"6ZAEauN0X589o05fxrypEIl2v_");
+		new JDBCCourseDAO("localhost", "5432", "test", "test", "test");
 	}
 }

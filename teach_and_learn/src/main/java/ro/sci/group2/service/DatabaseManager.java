@@ -29,8 +29,9 @@ import ro.sci.group2.domain.Role;
  */
 public class DatabaseManager {
 
-	private CourseDAO courseDao = new JDBCCourseDAO("ec2-54-83-12-22.compute-1.amazonaws.com", "5432", "d1vssoh84qkbg3", "vacmpcjhlpcnft",
-			"6ZAEauN0X589o05fxrypEIl2v_");
+	private CourseDAO courseDao = //new JDBCCourseDAO("ec2-54-83-12-22.compute-1.amazonaws.com", "5432", "d1vssoh84qkbg3", "vacmpcjhlpcnft",
+//			"6ZAEauN0X589o05fxrypEIl2v_");
+	new JDBCCourseDAO("localhost", "5432", "test", "test", "test");
 
 	public Collection<Role> convertStringToRole(String dbData) {
 		Collection<Role> roles = new LinkedList<>();
