@@ -62,14 +62,24 @@ public class MeetingService {
 		return dao.searchByAttendee(id);
 	}
 
-	public void addAttendee(User user) {
-
-		
+	public void addAttendee(Long id , User user) {
+		Meeting meeting = dao.findById(id);
+		Collection<User> attendees = meeting.getAttendees();
+		attendees.add(user);
+		meeting.setAttendees(attendees);
+		dao.update(meeting);
 	}
 
-	public boolean removeAttendee(User user) {
-
-		return true;
+	public boolean removeAttendee(Long id , User user) {
+		Meeting meeting = dao.findById(id);
+		Collection<User> attendees = meeting.getAttendees();
+		if(attendees.contains(user)) {
+			attendees.remove(user);
+			meeting.setAttendees(attendees);
+			dao.update(meeting);
+			return true;
+		}
+		return false;
 	}
 
 }

@@ -108,7 +108,7 @@
 						<td th:text="${{meeting.location}}" class="filterable-cell"></td>
 						<td th:text="${{meeting.meetingInterval}}" class="filterable-cell"></td>
 						<td th:text="${{meeting.duration}}" class="filterable-cell"></td>
-						<td th:text="${{meeting.maxAttendance}}" class="filterable-cell"></td>
+						<td th:text="${{meeting.currentAttendance + ' / ' + meeting.maxAttendance}}" class="filterable-cell"></td>
 						<td th:text="${{meeting.observation}}" class="filterable-cell"></td>
 						<td>
 							<div class="dropdown">
@@ -121,6 +121,7 @@
 											meeting</a></li>
 									<li><a th:href="@{/teacher/meeting_delete(id=${meeting.id} , userId=${user.id})}">Delete
 											meeting</a></li>
+									<li><a th:href="@{/teacher/meeting_details(id=${meeting.id})}">Meeting details</a></li>
 								</ul>
 							</div>
 						</td>

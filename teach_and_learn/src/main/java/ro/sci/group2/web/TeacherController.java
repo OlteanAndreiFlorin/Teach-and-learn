@@ -22,7 +22,6 @@ import ro.sci.group2.domain.User;
 import ro.sci.group2.service.CourseService;
 import ro.sci.group2.service.MeetingService;
 import ro.sci.group2.service.UserService;
-import ro.sci.group2.service.ValidationException;
 
 @Controller
 @RequestMapping("/teacher")
@@ -66,8 +65,23 @@ public class TeacherController {
 		if (id != null) {
 			user = userService.findById(id);
 		}
+		Collection<Meeting>listOfMeetings = meetingService.searchByTeacher(id);
+		for (Meeting meet : listOfMeetings) {
+			meet.setTeacher(user);
+			meetingService.save(meet);
+		}
 		view.addObject("user", user);
-		view.addObject("meetings", meetingService.listAll());
+		view.addObject("meetings", meetingService.searchByTeacher(id));
+		return view;
+	}
+	
+	@RequestMapping("/meeting_details")
+	public ModelAndView meetingDetail(Long id) {
+		ModelAndView view = new ModelAndView("teacher_meeting_details");
+		Meeting meet = meetingService.findById(id);
+		Collection<User>listOfUsers = meet.getAttendees();
+		view.addObject("attendees", listOfUsers);
+		view.addObject("meeting", meet);
 		return view;
 	}
 	
@@ -98,6 +112,7 @@ public class TeacherController {
 		DateTime localDateTime = DateTime.parse(meetingInterval, DateTimeFormat.forPattern(pattern));
 		DateTime localDuration = DateTime.parse(duration, DateTimeFormat.forPattern(pattern2));
 		Meeting meeting = meetingService.findById(id);
+		meeting.setTeacher(user);
 		meeting.setCity(city);
 		meeting.setLocation(location);
 		meeting.setMeetingInterval(localDateTime);
@@ -144,7 +159,8 @@ public class TeacherController {
 		meeting.setDuration(localDuration);
 		meeting.setObservation(observation);
 		meeting.setMaxAttendance(maxAttendance);
-		//meeting.setAttendees(new LinkedList<User>());
+		Collection<User>attendees = new LinkedList<User>();
+		meeting.setAttendees(attendees);
 		meetingService.save(meeting);
 		ModelAndView view = new ModelAndView("teacher_meetings");
 		view.addObject("user", user);
@@ -162,7 +178,7 @@ public class TeacherController {
 	}
 
 	@RequestMapping(value = "", method = RequestMethod.POST)
-	public ModelAndView saveuser(User user, @CurrentUser org.springframework.security.core.userdetails.User u) throws ValidationException {
+	public ModelAndView saveuser(User user, @CurrentUser org.springframework.security.core.userdetails.User u) {
 		user.setUsername(u.getUsername());
 		Collection<Role> roles = new LinkedList<>();
 		for (GrantedAuthority auth : u.getAuthorities()) {
