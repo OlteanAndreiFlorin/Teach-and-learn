@@ -1,10 +1,12 @@
 package ro.sci.group2.dao.db;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
@@ -50,6 +52,7 @@ public class JDBCMeetingDAO implements MeetingDAO {
 					.append(port).append("/").append(dbName).append("?user=").append(userName).append("&password=")
 					.append(pass).toString();
 			Connection result = DriverManager.getConnection(url);
+			result.setAutoCommit(false);
 			return result;
 		} catch (Exception ex) {
 			throw new RuntimeException("Error getting DB connectio", ex);
@@ -62,13 +65,13 @@ public class JDBCMeetingDAO implements MeetingDAO {
 		meeting.setId(rs.getLong("id"));
 		meeting.setCity(rs.getString("city"));
 		meeting.setLocation(rs.getString("location"));
-		meeting.setMaxAttendance(rs.getInt("max_atendees"));
+		meeting.setMaxAttendance(rs.getInt("max_attendees"));
 		meeting.setObservation(rs.getString("observation"));
 		meeting.setDuration(new DateTime(rs.getDate("duration")));
 		meeting.setMeetingInterval(new DateTime(rs.getDate("meeting_date")));
 		meeting.setCourse(dbManager.findCourse(rs.getLong("course_id")));
 		meeting.setTeacher(dbManager.findTeacher(rs.getLong("teahcer_id")));
-		meeting.setAttendees(dbManager.convertStringToUsers(rs.getString("atendees_id")));
+		meeting.setAttendees(dbManager.convertStringToUsers(rs.getString("attendees_id")));
 		return meeting;
 	}
 
@@ -104,14 +107,14 @@ public class JDBCMeetingDAO implements MeetingDAO {
 			connection.commit();
 		} catch (SQLException e) {
 			throw new RuntimeException("Error getting meeting from DB!", e);
-		}finally{
-			try{
+		} finally {
+			try {
 				connection.close();
-			}catch(Exception e){
-				
+			} catch (Exception e) {
+
 			}
 		}
-		if(result.size()>1){
+		if (result.size() > 1) {
 			throw new IllegalStateException("Multiple Meetings found for id" + id);
 		}
 
@@ -122,31 +125,132 @@ public class JDBCMeetingDAO implements MeetingDAO {
 	@Override
 	public Meeting update(Meeting model) {
 		Connection connection = newConnection();
-		try{
+		try {
 			PreparedStatement ps = null;
-			if(model.getId()>0){
-				ps =connection.prepareStatement("update meeting set ")
+			if (model.getId() > 0) {
+				ps = connection
+						.prepareStatement("update meeting set city=?, location=?, max_attendees=?, observation=?,"
+								+ " duration=?, meeting_date=?, course_id=?, teacher_id=?, attendees_id=?"
+								+ " where id = ? returning id");
+			} else {
+				ps = connection.prepareStatement(
+						"insert into meeting (city, location, max_attendees, observation, duration, meeting_date, "
+								+ "course_id, teacher_id, attendees_id) values(?,?,?,?,?,?,?,?,?)" + " returning id");
+			}
+			ps.setString(1, model.getCity());
+			ps.setString(2, model.getLocation());
+			ps.setInt(3, model.getMaxAttendance());
+			ps.setString(4, model.getObservation());
+			ps.setDate(5, (Date) model.getDuration().toDate());
+			ps.setDate(6, (Date) model.getMeetingInterval().toDate());
+			ps.setLong(7, model.getCourse().getId());
+			ps.setLong(8, model.getTeacher().getId());
+			DatabaseManager mg = new DatabaseManager();
+			ps.setString(9, mg.convertUserToString(model.getAttendees()));
+
+			if (model.getId() > 0) {
+				ps.setLong(10, model.getId());
+			}
+
+			ResultSet rs = ps.executeQuery();
+			if (rs.next()) {
+				model.setId(rs.getLong(1));
+			}
+			rs.close();
+			connection.commit();
+		} catch (SQLException e) {
+			throw new RuntimeException("Error getting meeting from db!", e);
+		} finally {
+			try {
+				connection.close();
+			} catch (Exception ex) {
+
 			}
 		}
-		return null;
+		return model;
 	}
 
 	@Override
 	public boolean delete(Meeting model) {
-		// TODO Auto-generated method stub
-		return false;
+		boolean result = false;
+		Connection connection = newConnection();
+		try {
+			Statement statement = connection.createStatement();
+			statement.execute("delete from meeting where id = " + model.getId());
+			if (statement.getUpdateCount() > -1) {
+				result = true;
+			}
+			connection.commit();
+		} catch (SQLException ex) {
+
+			throw new RuntimeException("Error deleting meeting.", ex);
+		} finally {
+			try {
+				connection.close();
+			} catch (Exception ex) {
+
+			}
+		}
+		return result;
 	}
 
 	@Override
 	public Collection<Meeting> searchByTeacher(Long id) {
-		// TODO Auto-generated method stub
-		return null;
+		Connection connection = newConnection();
+
+		Collection<Meeting> result = new LinkedList<>();
+
+		try (ResultSet rs = connection.createStatement()
+				.executeQuery("select * from meeting where teacher_id = " + id)) {
+
+			while (rs.next()) {
+				result.add(exctractMeeting(rs));
+			}
+			connection.commit();
+		} catch (SQLException ex) {
+
+			throw new RuntimeException("Error getting employees.", ex);
+		} finally {
+			try {
+				connection.close();
+			} catch (Exception ex) {
+
+			}
+		}
+		return result.isEmpty() ? null : result;
 	}
 
 	@Override
 	public Collection<Meeting> searchByCity(String query) {
-		// TODO Auto-generated method stub
-		return null;
+		if (query == null) {
+			query = "";
+		} else {
+			query = query.trim();
+		}
+
+		Connection connection = newConnection();
+
+		Collection<Meeting> result = new LinkedList<>();
+
+		try (ResultSet rs = connection.createStatement()
+				.executeQuery("select * from meeting where lower(city) like '%" + query.toLowerCase() + "%'")) {
+
+			while (rs.next()) {
+				result.add(exctractMeeting(rs));
+			}
+			connection.commit();
+		} catch (SQLException ex) {
+
+			throw new RuntimeException("Error getting meeting.", ex);
+		} finally {
+			try {
+				connection.close();
+			} catch (Exception ex) {
+
+			}
+		}
+
+		return result;
 	}
 
 	@Override
@@ -157,14 +261,54 @@ public class JDBCMeetingDAO implements MeetingDAO {
 
 	@Override
 	public Collection<Meeting> searchByCourse(Course course) {
-		// TODO Auto-generated method stub
-		return null;
+		Connection connection = newConnection();
+
+		Collection<Meeting> result = new LinkedList<>();
+
+		try (ResultSet rs = connection.createStatement()
+				.executeQuery("select * from meeting where course_id = " + course.getId())) {
+
+			while (rs.next()) {
+				result.add(exctractMeeting(rs));
+			}
+			connection.commit();
+		} catch (SQLException ex) {
+
+			throw new RuntimeException("Error getting employees.", ex);
+		} finally {
+			try {
+				connection.close();
+			} catch (Exception ex) {
+
+			}
+		}
+		return result.isEmpty() ? null : result;
 	}
 
 	@Override
 	public Collection<Meeting> searchByAttendee(Long id) {
-		// TODO Auto-generated method stub
-		return null;
+		Connection connection = newConnection();
+
+		Collection<Meeting> result = new LinkedList<>();
+
+		try (ResultSet rs = connection.createStatement()
+				.executeQuery("select * from meeting where course_id like '%" +id+ "%'" )) {
+
+			while (rs.next()) {
+				result.add(exctractMeeting(rs));
+			}
+			connection.commit();
+		} catch (SQLException ex) {
+
+			throw new RuntimeException("Error getting employees.", ex);
+		} finally {
+			try {
+				connection.close();
+			} catch (Exception ex) {
+
+			}
+		}
+		return result.isEmpty() ? null : result;
 	}
 
 }

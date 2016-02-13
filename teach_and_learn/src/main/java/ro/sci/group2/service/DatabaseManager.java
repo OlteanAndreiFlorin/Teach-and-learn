@@ -72,9 +72,9 @@ public class DatabaseManager {
 				sb.append(c.getId());
 				sb.append(";&;");
 			} else {
-				for (Course a : courseDao.getAll()) {
-					if (c.equals(a)) {
-						sb.append(a.getId());
+				for (Course course : courseDao.getAll()) {
+					if (c.equals(course)) {
+						sb.append(course.getId());
 						sb.append(";&;");
 						break;
 					}
@@ -111,18 +111,30 @@ public class DatabaseManager {
 
 	public Collection<User> convertStringToUsers(String dbUsers) {
 		Collection<User> users = new LinkedList<>();
-		if(dbUsers.isEmpty()){
+		if (dbUsers.isEmpty()) {
 			return users;
 		}
 		String[] s = dbUsers.split(";&;");
-		for(String stringId:s){
+		for (String stringId : s) {
 			Long id = Long.parseLong(stringId);
-			if(userDao.findById(id) == null){
+			if (userDao.findById(id) == null) {
 				throw new IllegalStateException("User not found in db while converting Users for meeting!");
-			}else{
+			} else {
 				users.add(userDao.findById(id));
 			}
 		}
 		return users;
+	}
+
+	public String convertUserToString(Collection<User> attendees) {
+		StringBuilder sb = new StringBuilder();
+		if (attendees.size() == 0) {
+			return "";
+		}
+		for (User u : attendees) {
+			sb.append(u.getId());
+			sb.append(";&;");
+		}
+		return sb.toString();
 	}
 }
