@@ -8,6 +8,8 @@ import org.springframework.stereotype.Component;
 
 import ro.sci.group2.dao.CourseDAO;
 import ro.sci.group2.dao.UserDAO;
+import ro.sci.group2.dao.db.JDBCCourseDAO;
+import ro.sci.group2.dao.db.JDBCUserDAO;
 import ro.sci.group2.domain.Course;
 import ro.sci.group2.domain.Role;
 import ro.sci.group2.domain.User;
@@ -31,19 +33,11 @@ import ro.sci.group2.domain.User;
  * @author Oltean Andrei
  *
  */
-@Component
 public class DatabaseManager {
 
-	@Autowired
-	private CourseDAO courseDao; // = new
-									// JDBCCourseDAO("ec2-54-83-12-22.compute-1.amazonaws.com",
-									// "5432", "d1vssoh84qkbg3",
-									// "vacmpcjhlpcnft",
-	// "6ZAEauN0X589o05fxrypEIl2v_");
-	// new JDBCCourseDAO("localhost", "5432", "test", "test", "test");
+	public CourseDAO courseDao = new JDBCCourseDAO("localhost", "5432", "test", "test", "test");
 
-	@Autowired
-	private UserDAO userDao;
+	public UserDAO userDao = new JDBCUserDAO("localhost", "5432", "test", "test", "test");
 
 	public Collection<Role> convertStringToRole(String dbData) {
 		Collection<Role> roles = new LinkedList<>();
@@ -128,7 +122,7 @@ public class DatabaseManager {
 
 	public String convertUserToString(Collection<User> attendees) {
 		StringBuilder sb = new StringBuilder();
-		if (attendees.size() == 0) {
+		if (attendees.isEmpty()) {
 			return "";
 		}
 		for (User u : attendees) {

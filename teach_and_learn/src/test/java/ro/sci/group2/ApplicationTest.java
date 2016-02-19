@@ -7,11 +7,11 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
 import ro.sci.group2.dao.CourseDAO;
+import ro.sci.group2.dao.MeetingDAO;
 import ro.sci.group2.dao.UserDAO;
 import ro.sci.group2.dao.db.JDBCCourseDAO;
+import ro.sci.group2.dao.db.JDBCMeetingDAO;
 import ro.sci.group2.dao.db.JDBCUserDAO;
-import ro.sci.group2.dao.inmemory.IMCourseDAO;
-import ro.sci.group2.dao.inmemory.IMUserDAO;
 
 @Configuration
 @EnableAutoConfiguration
@@ -32,6 +32,11 @@ public class ApplicationTest {
 	public CourseDAO courseDao() {
 		return //new IMCourseDAO();
 		new JDBCCourseDAO("localhost", "5432", "test", "test", "test");
+	}
+	@Bean
+	public MeetingDAO meetingDao(){
+		return //new IMMeetingDAO();
+		new JDBCMeetingDAO("localhost", "5432", "test", "test", "test");
 	}
 
 }

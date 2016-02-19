@@ -17,7 +17,7 @@ import java.util.LinkedList;
  * <li>phone = "1234567891";</li>
  * </ol>
  * 
- * @author SCI team 2. Java group
+ * @author Andrei,Razvan,Emilian
  *
  */
 public class User extends AbstractModel {
@@ -32,6 +32,14 @@ public class User extends AbstractModel {
 	private Gender gender = Gender.UNSPECIFIED;
 	private Collection<Role> roles = new LinkedList<>();
 	private Collection<Course> courses = new LinkedList<>();
+
+	public User(long id) {
+		setId(id);
+	}
+
+	public User() {
+		this(0);
+	}
 
 	public String getUsername() {
 		return username;

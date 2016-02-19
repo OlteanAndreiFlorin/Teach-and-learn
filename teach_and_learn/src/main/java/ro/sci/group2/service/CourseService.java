@@ -13,23 +13,35 @@ public class CourseService {
 
 	@Autowired
 	private CourseDAO dao;
-	
-	public Course save(Course course){
-		return dao.update(course);
+
+	public Course save(Course course) {
+		Course c = new Course();
+		if (!listAll().contains(course)) {
+			c = dao.update(course);
+		} else {
+			for (Course temp : listAll()) {
+				if (temp.equals(course)) {
+					c = temp;
+				}
+			}
+		}
+		return c;
 	}
-	
-	public Collection<Course>listAll(){
+
+	public Collection<Course> listAll() {
 		return dao.getAll();
 	}
-	public boolean delete(long id){
+
+	public boolean delete(long id) {
 		Course course = dao.findById(id);
-		if(course == null){
+		if (course == null) {
 			return false;
-		}else{
+		} else {
 			return dao.delete(course);
 		}
 	}
-	public Course findById(long id){
+
+	public Course findById(long id) {
 		Course course = dao.findById(id);
 		return course;
 	}

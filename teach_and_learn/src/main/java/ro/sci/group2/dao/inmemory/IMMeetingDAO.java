@@ -21,7 +21,6 @@ import ro.sci.group2.domain.User;
  * @author Razvan, Andrei, Hopy
  *
  */
-@Repository
 public class IMMeetingDAO extends IMBaseDAO<Meeting> implements MeetingDAO {
 
 	/*

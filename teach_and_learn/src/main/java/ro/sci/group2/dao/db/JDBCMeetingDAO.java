@@ -12,6 +12,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -67,10 +68,10 @@ public class JDBCMeetingDAO implements MeetingDAO {
 		meeting.setLocation(rs.getString("location"));
 		meeting.setMaxAttendance(rs.getInt("max_attendees"));
 		meeting.setObservation(rs.getString("observation"));
-		meeting.setDuration(new DateTime(rs.getDate("duration")));
-		meeting.setMeetingDate(new DateTime(rs.getDate("meeting_date")));
+		meeting.setDuration(DateTime.parse(rs.getString("duration"),DateTimeFormat.forPattern("HH:mm")));
+		meeting.setMeetingDate(DateTime.parse(rs.getString("meeting_date"),DateTimeFormat.forPattern("YYYY-MM-DD HH:mm")));
 		meeting.setCourse(dbManager.findCourse(rs.getLong("course_id")));
-		meeting.setTeacher(dbManager.findTeacher(rs.getLong("teahcer_id")));
+		meeting.setTeacher(dbManager.findTeacher(rs.getLong("teacher_id")));
 		meeting.setAttendees(dbManager.convertStringToUsers(rs.getString("attendees_id")));
 		return meeting;
 	}
@@ -99,7 +100,9 @@ public class JDBCMeetingDAO implements MeetingDAO {
 	@Override
 	public Meeting findById(Long id) {
 		Connection connection = newConnection();
+
 		List<Meeting> result = new LinkedList<>();
+
 		try (ResultSet rs = connection.createStatement().executeQuery("select * from meeting where id = " + id)) {
 			while (rs.next()) {
 				result.add(exctractMeeting(rs));
@@ -141,8 +144,8 @@ public class JDBCMeetingDAO implements MeetingDAO {
 			ps.setString(2, model.getLocation());
 			ps.setInt(3, model.getMaxAttendance());
 			ps.setString(4, model.getObservation());
-			ps.setDate(5, (Date) model.getDuration().toDate());
-			ps.setDate(6, (Date) model.getMeetingDate().toDate());
+			ps.setString(5, model.getDuration().toString("HH:mm"));
+			ps.setString(6, model.getMeetingDate().toString("YYYY-MM-DD HH:mm"));
 			ps.setLong(7, model.getCourse().getId());
 			ps.setLong(8, model.getTeacher().getId());
 			DatabaseManager mg = new DatabaseManager();
@@ -255,10 +258,8 @@ public class JDBCMeetingDAO implements MeetingDAO {
 
 	@Override
 	public Collection<Meeting> searchByDate(DateTime date) {
-		Date sqlDate = new Date(System.currentTimeMillis());
-		if (date != null) {
-			sqlDate = (Date) date.toDate();
-		} else {
+
+		if (date == null) {
 			return getAll();
 		}
 
@@ -267,21 +268,21 @@ public class JDBCMeetingDAO implements MeetingDAO {
 		Collection<Meeting> result = new LinkedList<>();
 
 		try (ResultSet rs = connection.createStatement()
-				.executeQuery("select * from meeting where meeting_date = " + sqlDate)) {
+				.executeQuery("select * from meeting where meeting_date like '%" + date.toString("YYYY-MM-DD")+"%'")) {
 
-			while(rs.next()){
+			while (rs.next()) {
 				result.add(exctractMeeting(rs));
 			}
 		} catch (SQLException ex) {
 			throw new RuntimeException("Error getting meetings while searcing for date.", ex);
-		}finally{
-			try{
+		} finally {
+			try {
 				connection.close();
-			}catch(Exception ex){
-				
+			} catch (Exception ex) {
+
 			}
 		}
-		return result.isEmpty() ? null:result;
+		return result.isEmpty() ? null : result;
 	}
 
 	@Override
