@@ -68,7 +68,7 @@ public class JDBCMeetingDAO implements MeetingDAO {
 		meeting.setMaxAttendance(rs.getInt("max_attendees"));
 		meeting.setObservation(rs.getString("observation"));
 		meeting.setDuration(new DateTime(rs.getDate("duration")));
-		meeting.setMeetingInterval(new DateTime(rs.getDate("meeting_date")));
+		meeting.setMeetingDate(new DateTime(rs.getDate("meeting_date")));
 		meeting.setCourse(dbManager.findCourse(rs.getLong("course_id")));
 		meeting.setTeacher(dbManager.findTeacher(rs.getLong("teahcer_id")));
 		meeting.setAttendees(dbManager.convertStringToUsers(rs.getString("attendees_id")));
@@ -142,7 +142,7 @@ public class JDBCMeetingDAO implements MeetingDAO {
 			ps.setInt(3, model.getMaxAttendance());
 			ps.setString(4, model.getObservation());
 			ps.setDate(5, (Date) model.getDuration().toDate());
-			ps.setDate(6, (Date) model.getMeetingInterval().toDate());
+			ps.setDate(6, (Date) model.getMeetingDate().toDate());
 			ps.setLong(7, model.getCourse().getId());
 			ps.setLong(8, model.getTeacher().getId());
 			DatabaseManager mg = new DatabaseManager();
@@ -254,9 +254,34 @@ public class JDBCMeetingDAO implements MeetingDAO {
 	}
 
 	@Override
-	public Collection<Meeting> searchByDate(String interval) {
-		// TODO Auto-generated method stub
-		return null;
+	public Collection<Meeting> searchByDate(DateTime date) {
+		Date sqlDate = new Date(System.currentTimeMillis());
+		if (date != null) {
+			sqlDate = (Date) date.toDate();
+		} else {
+			return getAll();
+		}
+
+		Connection connection = newConnection();
+
+		Collection<Meeting> result = new LinkedList<>();
+
+		try (ResultSet rs = connection.createStatement()
+				.executeQuery("select * from meeting where meeting_date = " + sqlDate)) {
+
+			while(rs.next()){
+				result.add(exctractMeeting(rs));
+			}
+		} catch (SQLException ex) {
+			throw new RuntimeException("Error getting meetings while searcing for date.", ex);
+		}finally{
+			try{
+				connection.close();
+			}catch(Exception ex){
+				
+			}
+		}
+		return result.isEmpty() ? null:result;
 	}
 
 	@Override
@@ -274,7 +299,7 @@ public class JDBCMeetingDAO implements MeetingDAO {
 			connection.commit();
 		} catch (SQLException ex) {
 
-			throw new RuntimeException("Error getting employees.", ex);
+			throw new RuntimeException("Error getting meetings while searcing by course.", ex);
 		} finally {
 			try {
 				connection.close();
@@ -292,7 +317,7 @@ public class JDBCMeetingDAO implements MeetingDAO {
 		Collection<Meeting> result = new LinkedList<>();
 
 		try (ResultSet rs = connection.createStatement()
-				.executeQuery("select * from meeting where course_id like '%" +id+ "%'" )) {
+				.executeQuery("select * from meeting where course_id like '%" + id + "%'")) {
 
 			while (rs.next()) {
 				result.add(exctractMeeting(rs));

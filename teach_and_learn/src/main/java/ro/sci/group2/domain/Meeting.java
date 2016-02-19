@@ -32,7 +32,7 @@ public class Meeting extends AbstractModel {
 	private String location;
 	
 	@DateTimeFormat(pattern="YYYY-MM-DD HH:mm")
-	private DateTime meetingInterval;
+	private DateTime meetingDate;
 	
 	@DateTimeFormat(pattern="HH:mm")
 	private DateTime duration;
@@ -84,12 +84,12 @@ public class Meeting extends AbstractModel {
 		this.location = location;
 	}
 
-	public DateTime getMeetingInterval() {
-		return meetingInterval;
+	public DateTime getMeetingDate() {
+		return meetingDate;
 	}
 
-	public void setMeetingInterval(DateTime meetingInterval) {
-		this.meetingInterval = meetingInterval;
+	public void setMeetingDate(DateTime meetingDate) {
+		this.meetingDate = meetingDate;
 	}
 
 	public String getObservation() {

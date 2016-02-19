@@ -5,7 +5,7 @@ package ro.sci.group2.service;
 
 import java.util.Collection;
 
-
+import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -50,8 +50,8 @@ public class MeetingService {
 		return dao.searchByCity(city);
 	}
 
-	public Collection<Meeting> searchByDate(String interval) {
-		return dao.searchByDate(interval);
+	public Collection<Meeting> searchByDate(DateTime date) {
+		return dao.searchByDate(date);
 	}
 
 	public Collection<Meeting> searchByCourse(Course course) {

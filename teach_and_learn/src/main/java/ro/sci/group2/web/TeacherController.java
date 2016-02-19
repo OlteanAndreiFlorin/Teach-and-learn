@@ -116,7 +116,7 @@ public class TeacherController {
 		meeting.setTeacher(user);
 		meeting.setCity(city);
 		meeting.setLocation(location);
-		meeting.setMeetingInterval(localDateTime);
+		meeting.setMeetingDate(localDateTime);
 		meeting.setDuration(localDuration);
 		meeting.setObservation(observation);
 		meeting.setMaxAttendance(maxAttendance);
@@ -156,7 +156,7 @@ public class TeacherController {
 		meeting.setCourse(course);
 		meeting.setCity(city);
 		meeting.setLocation(location);
-		meeting.setMeetingInterval(localDateTime);
+		meeting.setMeetingDate(localDateTime);
 		meeting.setDuration(localDuration);
 		meeting.setObservation(observation);
 		meeting.setMaxAttendance(maxAttendance);
