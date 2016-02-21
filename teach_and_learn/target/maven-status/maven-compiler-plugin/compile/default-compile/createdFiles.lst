@@ -13,6 +13,7 @@ ro\sci\group2\dao\inmemory\IMUserDAO.class
 ro\sci\group2\domain\Role.class
 ro\sci\group2\TeachAndLearnApplication.class
 ro\sci\group2\config\WebSecurityConfig.class
+ro\sci\group2\web\StudentController.class
 ro\sci\group2\dao\inmemory\IMMeetingDAO.class
 ro\sci\group2\dao\MeetingDAO.class
 ro\sci\group2\service\UserService.class

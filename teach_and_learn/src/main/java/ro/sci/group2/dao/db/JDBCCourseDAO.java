@@ -17,7 +17,7 @@ import ro.sci.group2.dao.CourseDAO;
 import ro.sci.group2.domain.Course;
 
 public class JDBCCourseDAO implements CourseDAO {
-	private static final Logger LOGGER = LoggerFactory.getLogger(JDBCUserDAO.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(JDBCCourseDAO.class);
 	private String host;
 	private String port;
 	private String dbName;
@@ -154,9 +154,8 @@ public class JDBCCourseDAO implements CourseDAO {
 			statement.execute("delete from course where id = " + model.getId());
 			if (statement.getUpdateCount() > -1) {
 				result = true;
-				connection.commit();
 			}
-			
+			connection.commit();
 		} catch (SQLException ex) {
 
 			throw new RuntimeException("Error deleting course.", ex);

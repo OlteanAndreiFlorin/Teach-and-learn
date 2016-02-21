@@ -66,8 +66,23 @@ public class TeacherController {
 		if (id != null) {
 			user = userService.findById(id);
 		}
+		Collection<Meeting>listOfMeetings = meetingService.searchByTeacher(id);
+		for (Meeting meet : listOfMeetings) {
+			meet.setTeacher(user);
+			meetingService.save(meet);
+		}
 		view.addObject("user", user);
-		view.addObject("meetings", meetingService.listAll());
+		view.addObject("meetings", meetingService.searchByTeacher(id));
+		return view;
+	}
+	
+	@RequestMapping("/meeting_details")
+	public ModelAndView meetingDetail(Long id) {
+		ModelAndView view = new ModelAndView("teacher_meeting_details");
+		Meeting meet = meetingService.findById(id);
+		Collection<User>listOfUsers = meet.getAttendees();
+		view.addObject("attendees", listOfUsers);
+		view.addObject("meeting", meet);
 		return view;
 	}
 	
@@ -87,7 +102,7 @@ public class TeacherController {
 	}
 	
 	@RequestMapping(value="/meeting_edit" , method = RequestMethod.POST)
-	public ModelAndView saveEditedMeeting(Long id , Long courseId , Long userId , String city , String location , String meetingInterval , String duration , String observation , int maxAttendance , @CurrentUser org.springframework.security.core.userdetails.User u) {
+	public ModelAndView saveEditedMeeting(Long id , Long courseId , Long userId , String city , String location , String meetingDate , String duration , String observation , int maxAttendance , @CurrentUser org.springframework.security.core.userdetails.User u) {
 		String pattern = "YYYY-MM-DD HH:mm";
 		String pattern2 = "HH:mm";
 
@@ -95,12 +110,13 @@ public class TeacherController {
 		if (userId != null) {
 			user = userService.findById(userId);
 		}
-		DateTime localDateTime = DateTime.parse(meetingInterval, DateTimeFormat.forPattern(pattern));
+		DateTime localDateTime = DateTime.parse(meetingDate, DateTimeFormat.forPattern(pattern));
 		DateTime localDuration = DateTime.parse(duration, DateTimeFormat.forPattern(pattern2));
 		Meeting meeting = meetingService.findById(id);
+		meeting.setTeacher(user);
 		meeting.setCity(city);
 		meeting.setLocation(location);
-		meeting.setMeetingInterval(localDateTime);
+		meeting.setMeetingDate(localDateTime);
 		meeting.setDuration(localDuration);
 		meeting.setObservation(observation);
 		meeting.setMaxAttendance(maxAttendance);
@@ -124,7 +140,7 @@ public class TeacherController {
 	}
 	
 	@RequestMapping(value="/meeting_create" , method = RequestMethod.POST)
-	public ModelAndView saveMeeting(Long courseId , Long userId , String city , String location , String meetingInterval , String duration , String observation , int maxAttendance , @CurrentUser org.springframework.security.core.userdetails.User u) {
+	public ModelAndView saveMeeting(Long courseId , Long userId , String city , String location , String meetingDate , String duration , String observation , int maxAttendance , @CurrentUser org.springframework.security.core.userdetails.User u) {
 		String pattern = "YYYY-MM-DD HH:mm";
 		String pattern2 = "HH:mm";
 
@@ -132,7 +148,7 @@ public class TeacherController {
 		if (userId != null) {
 			user = userService.findById(userId);
 		}
-		DateTime localDateTime = DateTime.parse(meetingInterval, DateTimeFormat.forPattern(pattern));
+		DateTime localDateTime = DateTime.parse(meetingDate, DateTimeFormat.forPattern(pattern));
 		DateTime localDuration = DateTime.parse(duration, DateTimeFormat.forPattern(pattern2));
 		Meeting meeting = new Meeting();
 		Course course = courseService.findById(courseId);
@@ -140,11 +156,12 @@ public class TeacherController {
 		meeting.setCourse(course);
 		meeting.setCity(city);
 		meeting.setLocation(location);
-		meeting.setMeetingInterval(localDateTime);
+		meeting.setMeetingDate(localDateTime);
 		meeting.setDuration(localDuration);
 		meeting.setObservation(observation);
 		meeting.setMaxAttendance(maxAttendance);
-		//meeting.setAttendees(new LinkedList<User>());
+		Collection<User>attendees = new LinkedList<User>();
+		meeting.setAttendees(attendees);
 		meetingService.save(meeting);
 		ModelAndView view = new ModelAndView("teacher_meetings");
 		view.addObject("user", user);

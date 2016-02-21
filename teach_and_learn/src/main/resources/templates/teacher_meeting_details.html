@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+<title>Homepage</title>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+<link
+	href="http://cdn.jsdelivr.net/webjars/bootstrap/3.3.4/css/bootstrap.min.css"
+	th:href="@{/webjars/bootstrap/3.3.4/css/bootstrap.min.css}"
+	rel="stylesheet" media="screen" />
+
+<script src="http://cdn.jsdelivr.net/webjars/jquery/2.1.4/jquery.min.js"
+	th:src="@{/webjars/jquery/2.1.4/jquery.min.js}"></script>
+
+<script
+	src="http://cdn.jsdelivr.net/webjars/jquery-tmpl/beta1.0.0/jquery.tmpl.min.js"
+	th:src="@{/webjars/jquery-tmpl/beta1.0.0/jquery.tmpl.min.js}"></script>
+
+<script
+	src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+
+<style type="text/css">
+</style>
+</head>
+<body>
+	<div class="container">
+		<img src="./static/images/logo.png}" th:src="@{images/logo.png}"
+			width="80" />
+
+		<div style='float: right;'
+			th:with="currentUser=${#httpServletRequest.userPrincipal?.name}">
+			<div th:if="${currentUser != null}">
+				<form th:action="@{/logout}" method="post">
+					<input type="submit" class="btn btn-default" onclick=""
+						value="Log out" />
+				</form>
+				<p th:text="${currentUser}">sample_user</p>
+			</div>
+		</div>
+
+		<div>
+			<nav class="navbar navbar-default">
+				<div class="container-fluid">
+					<div class="navbar-header">
+						<a class="navbar-brand">Teach and Learn</a>
+					</div>
+					<ul class="nav navbar-nav">
+						<li><a href="/">Home</a></li>
+						<li class="active"><a href="/teacher">Teacher</a></li>
+						<li><a href="/student">Student</a></li>
+						<li><a href="#">Contact</a></li>
+						<li><a href="#">Admin</a></li>
+					</ul>
+				</div>
+			</nav>
+
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h3 class="panel-title">Meeting details</h3>
+				</div>
+			</div>
+
+
+			<table class="table table-striped header-fixed">
+				<thead>
+					<tr>
+						<th>Subject</th>
+						<th>Level</th>
+						<th>Teacher name</th>
+						<th>City</th>
+						<th>Location</th>
+						<th>Date and time</th>
+						<th>Duration</th>
+						<th>Attendance/max</th>
+						<th>Observation</th>
+						<th>&nbsp;</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td th:text="${{meeting.course.name}}" class="filterable-cell"></td>
+						<td th:text="${{meeting.course.level}}" class="filterable-cell"></td>
+						<td th:text="${{meeting.teacher.firstName + ' ' + meeting.teacher.lastName}}" class="filterable-cell"></td>
+						<td th:text="${{meeting.city}}" class="filterable-cell"></td>
+						<td th:text="${{meeting.location}}" class="filterable-cell"></td>
+						<td th:text="${{meeting.meetingDate}}" class="filterable-cell"></td>
+						<td th:text="${{meeting.duration}}" class="filterable-cell"></td>
+						<td th:text="${{meeting.currentAttendance + ' / ' + meeting.maxAttendance}}" class="filterable-cell"></td>
+						<td th:text="${{meeting.observation}}" class="filterable-cell"></td>
+					</tr>
+				</tbody>
+			</table>
+			<table class="table table-striped header-fixed">
+				<thead>
+					<tr>
+						<th>Student's name</th>
+						<th>Student's address</th>
+						<th>Student's phone</th>
+						<th>Student's email</th>
+						<th>&nbsp;</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="student : ${attendees}">
+						<td th:text="${{student.firstName + ' ' + student.lastName}}" class="filterable-cell"></td>
+						<td th:text="${{student.address}}" class="filterable-cell"></td>
+						<td th:text="${{student.email}}" class="filterable-cell"></td>
+						<td th:text="${{student.phone}}" class="filterable-cell"></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</body>
+</html>

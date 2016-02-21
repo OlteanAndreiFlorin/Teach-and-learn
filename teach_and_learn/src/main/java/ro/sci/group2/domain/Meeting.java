@@ -1,6 +1,7 @@
 package ro.sci.group2.domain;
 
 import java.util.Collection;
+import java.util.LinkedList;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
@@ -9,7 +10,6 @@ import javax.validation.constraints.NotNull;
 import org.joda.time.DateTime;
 import org.springframework.format.annotation.DateTimeFormat;
 
-
 /**
  * The meeting class models a meeting that a teacher can initiate inside the
  * meeting the following information are saved: The teacher who initiated the
@@ -17,39 +17,40 @@ import org.springframework.format.annotation.DateTimeFormat;
  * meeting,observations that the teacher might add for the meeting the course
  * that will be taught and a list with the attendees;
  * 
- * @author Andrei 
+ * @author Andrei,Razvan
  *
  */
 public class Meeting extends AbstractModel {
 
-	
 	private User teacher;
-	
+
 	@NotNull
 	private String city;
-	
+
 	@NotNull
 	private String location;
-	
-	@DateTimeFormat(pattern="YYYY-MM-DD HH:mm")
-	private DateTime meetingInterval;
-	
-	@DateTimeFormat(pattern="HH:mm")
+
+	@DateTimeFormat(pattern = "YYYY-MM-DD HH:mm")
+	private DateTime meetingDate;
+
+	@DateTimeFormat(pattern = "HH:mm")
 	private DateTime duration;
-	
+
 	@NotNull
 	private String observation;
-	
+
 	@NotNull
-	private Collection<User> attendees;
-	
+	private Collection<User> attendees = new LinkedList<>();
+
 	@NotNull
 	private Course course;
-	
-	@Min(0) @Max(100)
+
+	@Min(0)
+	@Max(100)
 	private int maxAttendance;
-	
-	@Min(0) @Max(100)
+
+	@Min(0)
+	@Max(100)
 	private int currentAttendance;
 
 	public Meeting(long id) {
@@ -84,12 +85,12 @@ public class Meeting extends AbstractModel {
 		this.location = location;
 	}
 
-	public DateTime getMeetingInterval() {
-		return meetingInterval;
+	public DateTime getMeetingDate() {
+		return meetingDate;
 	}
 
-	public void setMeetingInterval(DateTime meetingInterval) {
-		this.meetingInterval = meetingInterval;
+	public void setMeetingDate(DateTime meetingDate) {
+		this.meetingDate = meetingDate;
 	}
 
 	public String getObservation() {
@@ -125,7 +126,8 @@ public class Meeting extends AbstractModel {
 	}
 
 	/**
-	 * @param recurrency the recurrency to set
+	 * @param recurrency
+	 *            the recurrency to set
 	 */
 	public void setDuration(DateTime duration) {
 		this.duration = duration;
@@ -139,19 +141,57 @@ public class Meeting extends AbstractModel {
 	}
 
 	/**
-	 * @param maxAttendance the maxAttendance to set
+	 * @param maxAttendance
+	 *            the maxAttendance to set
 	 */
 	public void setMaxAttendance(int maxAttendance) {
 		this.maxAttendance = maxAttendance;
 	}
-	
-	public int getCurrentAttendance(){
+
+	public int getCurrentAttendance() {
 		return attendees.size();
 	}
-	
-	public boolean isFull(){
+
+	public boolean isFull() {
 		return (this.getCurrentAttendance() >= this.getMaxAttendance());
 	}
-	
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result + ((course == null) ? 0 : course.hashCode());
+		result = prime * result + ((meetingDate == null) ? 0 : meetingDate.hashCode());
+		result = prime * result + ((teacher == null) ? 0 : teacher.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (!(obj instanceof Meeting))
+			return false;
+		Meeting other = (Meeting) obj;
+		if (course == null) {
+			if (other.course != null)
+				return false;
+		} else if (!course.equals(other.course)){
+			System.out.println("ding");
+			return false;}
+		if (meetingDate == null) {
+			if (other.meetingDate != null)
+				return false;
+		} else if (!meetingDate.equals(other.meetingDate))
+			return false;
+		if (teacher == null) {
+			if (other.teacher != null)
+				return false;
+		} else if (!teacher.equals(other.teacher))
+			return false;
+		return true;
+	}
 
 }

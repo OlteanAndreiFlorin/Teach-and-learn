@@ -183,9 +183,8 @@ public class JDBCUserDAO implements UserDAO {
 			statement.execute("delete from person where id = " + model.getId());
 			if (statement.getUpdateCount() > -1) {
 				result = true;
-				connection.commit();
 			}
-			
+			connection.commit();
 		} catch (SQLException ex) {
 
 			throw new RuntimeException("Error deleting user.", ex);

@@ -7,7 +7,7 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedList;
 
-
+import org.joda.time.DateTime;
 import org.joda.time.Interval;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
@@ -21,7 +21,6 @@ import ro.sci.group2.domain.User;
  * @author Razvan, Andrei, Hopy
  *
  */
-@Repository
 public class IMMeetingDAO extends IMBaseDAO<Meeting> implements MeetingDAO {
 
 	/*
@@ -83,15 +82,14 @@ public class IMMeetingDAO extends IMBaseDAO<Meeting> implements MeetingDAO {
 	 * @see ro.sci.group2.dao.MeetingDAO#searchByDate(org.joda.time.Interval)
 	 */
 	
-	public Collection<Meeting> searchByDate(String interval) {
-		if (null == interval) {
+	public Collection<Meeting> searchByDate(DateTime date) {
+		if (null == date) {
 			return getAll();
 		}
-		Interval intervalDate = Interval.parse(interval);
 		Collection<Meeting> all = new LinkedList<>(getAll());
 		for (Iterator<Meeting> it = all.iterator(); it.hasNext();) {
 			Meeting meeting = it.next();
-			if ((!intervalDate.contains(meeting.getMeetingInterval()))) {
+			if ((!date.equals(meeting.getMeetingDate()))) {
 				it.remove();
 			}
 		}
