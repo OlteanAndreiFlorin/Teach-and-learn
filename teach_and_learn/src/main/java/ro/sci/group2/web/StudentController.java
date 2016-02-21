@@ -115,6 +115,7 @@ public class StudentController {
 			Collection<User> attendees = meeting.getAttendees();
 			attendees.add(user);
 			meeting.setAttendees(attendees);
+			meetingService.save(meeting);
 		}
 		return listMeetings(user.getId());
 	}
@@ -129,6 +130,7 @@ public class StudentController {
 			Collection<User> attendees = meeting.getAttendees();
 			attendees.remove(user);
 			meeting.setAttendees(attendees);
+			meetingService.save(meeting);
 		}
 		return listMeetings(user.getId());
 	}

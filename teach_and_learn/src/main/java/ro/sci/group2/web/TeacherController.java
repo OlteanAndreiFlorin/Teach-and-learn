@@ -102,7 +102,7 @@ public class TeacherController {
 	}
 	
 	@RequestMapping(value="/meeting_edit" , method = RequestMethod.POST)
-	public ModelAndView saveEditedMeeting(Long id , Long courseId , Long userId , String city , String location , String meetingInterval , String duration , String observation , int maxAttendance , @CurrentUser org.springframework.security.core.userdetails.User u) {
+	public ModelAndView saveEditedMeeting(Long id , Long courseId , Long userId , String city , String location , String meetingDate , String duration , String observation , int maxAttendance , @CurrentUser org.springframework.security.core.userdetails.User u) {
 		String pattern = "YYYY-MM-DD HH:mm";
 		String pattern2 = "HH:mm";
 
@@ -110,7 +110,7 @@ public class TeacherController {
 		if (userId != null) {
 			user = userService.findById(userId);
 		}
-		DateTime localDateTime = DateTime.parse(meetingInterval, DateTimeFormat.forPattern(pattern));
+		DateTime localDateTime = DateTime.parse(meetingDate, DateTimeFormat.forPattern(pattern));
 		DateTime localDuration = DateTime.parse(duration, DateTimeFormat.forPattern(pattern2));
 		Meeting meeting = meetingService.findById(id);
 		meeting.setTeacher(user);
@@ -140,7 +140,7 @@ public class TeacherController {
 	}
 	
 	@RequestMapping(value="/meeting_create" , method = RequestMethod.POST)
-	public ModelAndView saveMeeting(Long courseId , Long userId , String city , String location , String meetingInterval , String duration , String observation , int maxAttendance , @CurrentUser org.springframework.security.core.userdetails.User u) {
+	public ModelAndView saveMeeting(Long courseId , Long userId , String city , String location , String meetingDate , String duration , String observation , int maxAttendance , @CurrentUser org.springframework.security.core.userdetails.User u) {
 		String pattern = "YYYY-MM-DD HH:mm";
 		String pattern2 = "HH:mm";
 
@@ -148,7 +148,7 @@ public class TeacherController {
 		if (userId != null) {
 			user = userService.findById(userId);
 		}
-		DateTime localDateTime = DateTime.parse(meetingInterval, DateTimeFormat.forPattern(pattern));
+		DateTime localDateTime = DateTime.parse(meetingDate, DateTimeFormat.forPattern(pattern));
 		DateTime localDuration = DateTime.parse(duration, DateTimeFormat.forPattern(pattern2));
 		Meeting meeting = new Meeting();
 		Course course = courseService.findById(courseId);
