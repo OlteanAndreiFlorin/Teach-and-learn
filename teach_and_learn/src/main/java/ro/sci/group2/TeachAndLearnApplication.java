@@ -21,10 +21,10 @@ import ro.sci.group2.dao.inmemory.IMUserDAO;
 @Configuration
 @EnableAutoConfiguration
 @ComponentScan
-public class Application {
+public class TeachAndLearnApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(Application.class, args);
+		SpringApplication.run(TeachAndLearnApplication.class, args);
 	}
 
 //@formatter:off
