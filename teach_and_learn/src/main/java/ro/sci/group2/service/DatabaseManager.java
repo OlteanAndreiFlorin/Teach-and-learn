@@ -35,9 +35,15 @@ import ro.sci.group2.domain.User;
  */
 public class DatabaseManager {
 
-	public CourseDAO courseDao = new JDBCCourseDAO("localhost", "5432", "test", "test", "test");
+	public CourseDAO courseDao = //new JDBCCourseDAO("localhost", "5432", "test", "test", "test");
+			new JDBCCourseDAO("ec2-54-83-12-22.compute-1.amazonaws.com", "5432",
+			 		"d1vssoh84qkbg3", "vacmpcjhlpcnft",
+			 		"6ZAEauN0X589o05fxrypEIl2v_");
 
-	public UserDAO userDao = new JDBCUserDAO("localhost", "5432", "test", "test", "test");
+	public UserDAO userDao = //new JDBCUserDAO("localhost", "5432", "test", "test", "test");
+			new JDBCUserDAO("ec2-54-83-12-22.compute-1.amazonaws.com", "5432",
+			 		"d1vssoh84qkbg3", "vacmpcjhlpcnft",
+			 		"6ZAEauN0X589o05fxrypEIl2v_");
 
 	public Collection<Role> convertStringToRole(String dbData) {
 		Collection<Role> roles = new LinkedList<>();
